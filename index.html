@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The ClickLounge Birthday Experience</title>
+<meta name="description" content="Build your own birthday portrait package — mix and match your session, mood, and keepsake.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #3F8F7E; --accent2: #E3B34D; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  .page { font-family: 'Manrope', system-ui, -apple-system, sans-serif; background: #121110; color: #F7F3EC; min-height: 100vh; width: 100%; box-sizing: border-box; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; box-sizing: border-box; }
+
+  header.top { padding: 28px 0; }
+  .top-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .brandmark { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .brand-loc { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,243,236,0.5); }
+
+  .hero { padding: 56px 0 48px; text-align: center; }
+  .hero-eyebrow { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 18px; }
+  .hero-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(34px, 6vw, 62px); line-height: 1.06; margin: 0 0 20px; font-weight: 600; }
+  .hero-sub { font-size: clamp(15px, 2.2vw, 19px); font-weight: 800; letter-spacing: 0.02em; margin: 0 0 18px; color: var(--accent2); }
+  .hero-copy { max-width: 560px; margin: 0 auto; color: rgba(247,243,236,0.68); font-size: 16px; line-height: 1.65; }
+
+  .section { padding: 52px 0; border-top: 1px solid rgba(247,243,236,0.1); }
+  .section-eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .section-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 30px; margin: 0 0 8px; font-weight: 600; }
+  .section-copy { color: rgba(247,243,236,0.6); font-size: 15px; margin: 0 0 30px; max-width: 540px; line-height: 1.55; }
+
+  .persona-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .persona-card { display: block; border: 1px solid rgba(247,243,236,0.14); border-top: 4px solid var(--stripe, #3F8F7E); border-radius: 16px; padding: 22px 20px; background: #1B1918; cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
+  .persona-card:hover { transform: translateY(-3px); }
+  .persona-card--active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .persona-emoji { font-size: 26px; }
+  .persona-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 21px; font-weight: 600; margin-top: 10px; }
+  .persona-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 4px 0 10px; font-weight: 700; }
+  .persona-desc { font-size: 13px; color: rgba(247,243,236,0.6); line-height: 1.5; min-height: 54px; margin: 0 0 14px; }
+  .persona-cta { font-size: 12px; font-weight: 700; letter-spacing: 0.03em; color: #F7F3EC; border-top: 1px solid rgba(247,243,236,0.12); padding-top: 12px; }
+
+  .layout { display: flex; gap: 44px; align-items: flex-start; }
+  .content-col { flex: 1; min-width: 0; }
+  .summary { width: 340px; flex-shrink: 0; position: sticky; top: 24px; background: #1B1918; border: 1px solid rgba(247,243,236,0.14); border-radius: 18px; padding: 26px; box-sizing: border-box; }
+
+  .step-block + .step-block { margin-top: 48px; }
+  .step-eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .step-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; margin: 0 0 6px; font-weight: 600; }
+  .step-copy { color: rgba(247,243,236,0.58); font-size: 14px; margin: 0 0 22px; line-height: 1.5; }
+  .step-note { font-size: 12px; color: rgba(247,243,236,0.5); margin: 16px 0 0; }
+  .step-note strong { color: var(--accent2); font-weight: 700; }
+
+  .tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tile-grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .tile { text-align: left; border: 1px solid rgba(247,243,236,0.14); border-radius: 16px; padding: 20px; background: #1B1918; cursor: pointer; width: 100%; box-sizing: border-box; transition: transform .15s ease, border-color .15s ease; position: relative; }
+  .tile:hover { transform: translateY(-2px); }
+  .tile--selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .tile-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px; }
+  .tile-emoji { font-size: 22px; }
+  .tile-price { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+  .tile-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 21px; font-weight: 600; }
+  .tile-sub { font-size: 12px; color: rgba(247,243,236,0.55); margin: 4px 0 14px; }
+  .bullet-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .bullet-list li { font-size: 13px; color: rgba(247,243,236,0.72); padding-left: 16px; position: relative; }
+  .bullet-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--accent); }
+  .tile-check { display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+
+  .tile-double { grid-column: 1 / -1; background: linear-gradient(135deg, rgba(63,143,126,0.26) 0%, #1B1918 45%, rgba(227,179,77,0.20) 100%); }
+  .double-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 16px 0; flex-wrap: wrap; }
+  .double-side { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(247,243,236,0.75); text-align: left; }
+  .double-emoji { font-size: 22px; }
+  .double-x { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; color: var(--accent); }
+  .double-tagline { text-align: center; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--accent); margin: 0; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+  .chip { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(247,243,236,0.16); border-radius: 999px; padding: 10px 18px; background: transparent; cursor: pointer; font-size: 13px; }
+  .chip--active { border-color: var(--accent); background: rgba(63,143,126,0.16); }
+  .chip-price { font-weight: 800; color: var(--accent); font-size: 12px; }
+
+  .mm-callout { margin: 22px 0 40px; border: 1px dashed rgba(247,243,236,0.2); border-radius: 16px; padding: 18px 22px; text-align: center; }
+  .mm-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .mm-copy { font-size: 13px; color: rgba(247,243,236,0.6); margin: 0; }
+
+  .substep { margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(247,243,236,0.1); }
+  .substep-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 19px; margin: 0 0 4px; font-weight: 600; }
+  .substep-copy { font-size: 13px; color: rgba(247,243,236,0.55); margin: 0 0 14px; }
+
+  .era-choice-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 26px; }
+  .era-option { display: block; text-align: left; border: 1px solid rgba(247,243,236,0.16); border-radius: 16px; padding: 26px 24px; background: #1B1918; cursor: pointer; width: 100%; box-sizing: border-box; transition: transform .15s ease, border-color .15s ease; }
+  .era-option:hover { transform: translateY(-2px); }
+  .era-option--active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .era-option-emoji { font-size: 26px; }
+  .era-option-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; font-weight: 600; margin: 10px 0 6px; }
+  .era-option-desc { font-size: 13px; color: rgba(247,243,236,0.6); line-height: 1.5; margin: 0; }
+
+  .summary-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .summary-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 23px; margin: 6px 0 18px; font-weight: 600; }
+  .summary-lines { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .summary-line { display: flex; justify-content: space-between; font-size: 13px; color: rgba(247,243,236,0.78); gap: 12px; }
+  .summary-line span:first-child { flex: 1; }
+  .summary-total { display: flex; justify-content: space-between; align-items: baseline; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 25px; font-weight: 700; border-top: 1px solid rgba(247,243,236,0.16); padding-top: 14px; margin-bottom: 18px; color: var(--accent2); }
+  .summary-note { font-size: 11px; color: rgba(247,243,236,0.45); margin-top: 14px; line-height: 1.5; }
+
+  .btn-primary { display: block; width: 100%; background: var(--accent2); color: #121110; border: none; border-radius: 999px; padding: 14px 20px; font-weight: 800; font-size: 14px; letter-spacing: 0.02em; cursor: pointer; box-sizing: border-box; text-align: center; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary { display: block; width: 100%; background: transparent; color: #F7F3EC; border: 1px solid rgba(247,243,236,0.24); border-radius: 999px; padding: 12px 20px; font-weight: 700; font-size: 13px; letter-spacing: 0.02em; cursor: pointer; box-sizing: border-box; text-align: center; margin-top: 10px; }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(9,8,7,0.78); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 50; box-sizing: border-box; }
+  .modal-card { background: #1B1918; border: 1px solid rgba(247,243,236,0.16); border-radius: 20px; padding: 32px; max-width: 420px; width: 100%; position: relative; box-sizing: border-box; }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: #F7F3EC; font-size: 22px; cursor: pointer; line-height: 1; padding: 4px; }
+  .modal-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .modal-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 23px; margin: 8px 0 20px; font-weight: 600; }
+  .modal-note { font-size: 12px; color: rgba(247,243,236,0.6); line-height: 1.55; margin-bottom: 18px; }
+
+  .footer { padding: 40px 0 60px; text-align: center; font-size: 12px; color: rgba(247,243,236,0.4); border-top: 1px solid rgba(247,243,236,0.1); line-height: 1.7; }
+
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .layout { flex-direction: column; }
+    .summary { width: 100%; position: static; }
+    .persona-grid { grid-template-columns: repeat(2, 1fr); }
+    .tile-grid, .tile-grid--4 { grid-template-columns: 1fr; }
+    .era-choice-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .persona-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <div class="wrap">
+      <div class="top-row">
+        <div>
+          <div class="brandmark">Click Lounge Studio</div>
+          <div class="brand-loc">Antipolo City &middot; Birthday Sessions</div>
+        </div>
+        <div class="brand-loc">Build your own portrait menu below</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-eyebrow">The ClickLounge Birthday Experience</div>
+        <h1 class="hero-title">You Choose the Mood.<br>We Create the Look.</h1>
+        <p class="hero-sub">Mix and match your session, mood, and keepsake.</p>
+        <p class="hero-copy">No fixed packages here &mdash; build a birthday portrait experience that's entirely yours, one choice at a time.</p>
+      </div>
+    </section>
+
+    <div id="app"></div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      Click Lounge Studio &middot; Antipolo City, Philippines<br>
+      Final look confirmed with your photographer on the day of your shoot.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // The real booking flow's Schedule screen auto-selects this build and jumps
+  // straight to date/time picking via its ?pkg=&price=&desc=&dur= URL params.
+  var BOOKING_URL = "https://hellotalentff-max.github.io/clicklounge_booking/";
+
+  var SESSIONS = [
+    { id: 'essential', emoji: '📸', name: 'Essential', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Fur coat available'] },
+    { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit', '3 edited photos', 'Basic hair & makeup', 'Selected studio outfit'] },
+    { id: 'signature', emoji: '👑', name: 'Signature', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfits', '5 edited photos', 'Glam hair & makeup', '8×24 portrait included'] }
+  ];
+
+  var MOODS = [
+    { id: 'styleshots', emoji: '✨', name: 'Styleshots', sub: 'Modern / Clean / Confident', price: 0, bullets: ['Photographer-guided posing', 'Contemporary lighting', 'Personalized portrait direction'] },
+    { id: 'coatcode', emoji: '🖤', name: 'The Coat Code', sub: 'Luxury / Bold / Fashion', price: 500, bullets: ['Signature fur coat', 'Dark editorial lighting', 'High-fashion posing'] },
+    { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Heavenly styling'] }
+  ];
+
+  var DOUBLE = { id: 'double', name: 'The Double Signature', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', 'Glam hair & makeup'] };
+
+  var KEEPSAKES = [
+    { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
+    { id: 'mini', emoji: '🖼️', name: 'Mini Keepsake', bullets: ['4 pcs 2×3in prints', '2 pcs 3×4in prints'] },
+    { id: 'wall', emoji: '🎥', name: 'Signature Wall', bullets: ['Mini Keepsake included', '8×24in printed portrait'] },
+    { id: 'acrylic', emoji: '💎', name: 'Signature Acrylic', bullets: ['Mini Keepsake included', '8×24in portrait in Acrylic Frame with Gold Studs'] }
+  ];
+
+  var EXTRAS = [
+    { key: 'outfit', name: 'Additional Outfit Change', price: 500 },
+    { key: 'photos', name: '+3 Edited Photos', price: 300 },
+    { key: 'rush', name: 'Rush 24-Hour Delivery', price: 500 }
+  ];
+
+  var PERSONAS = [
+    { id: 'itgirl', emoji: '🖤', name: 'The It Girl', tag: 'Coat Code', stripe: '#2E5C55', desc: 'Dark editorial lighting. Fur coat. Black styling.', session: 'styled', mood: 'coatcode', keepsake: 'digital' },
+    { id: 'muse', emoji: '🪽', name: 'The Muse', tag: 'Angelic Muse', stripe: '#E3B34D', desc: 'Angel wings. Soft celestial lighting. Ethereal styling.', session: 'styled', mood: 'angelic', keepsake: 'mini' },
+    { id: 'mainchar', emoji: '✨', name: 'The Main Character', tag: 'Styleshots', stripe: '#C1603D', desc: 'Photographer-guided posing. Confident editorial portraits.', session: 'styled', mood: 'styleshots', keepsake: 'digital', extras: { outfit: true, photos: false, rush: false } },
+    { id: 'icon', emoji: '👑', name: 'The Icon', tag: 'Prestige', stripe: '#8C4A2F', desc: 'Unlimited shots. Multiple looks. Full glam. 8×24 portrait.', session: 'signature', mood: 'double', keepsake: 'wall' }
+  ];
+
+  var state = {
+    session: 'styled',
+    mood: 'styleshots',
+    keepsake: 'digital',
+    extras: { outfit: false, photos: false, rush: false },
+    activePersona: null,
+    showPersonas: false,
+    showConfirm: false
+  };
+
+  function setState(patch) {
+    Object.assign(state, patch);
+    render();
+  }
+
+  function fmt(n) {
+    var sign = n < 0 ? '-' : '';
+    return sign + '₱' + Math.abs(n).toLocaleString('en-PH');
+  }
+
+  function keepsakePrice(session, keepsake) {
+    if (keepsake === 'digital') return 0;
+    if (keepsake === 'mini') return 300;
+    if (keepsake === 'wall') return session === 'signature' ? 0 : 1000;
+    if (keepsake === 'acrylic') return session === 'signature' ? 1000 : 1500;
+    return 0;
+  }
+
+  function calcTotalFor(session, mood, keepsake, extras) {
+    var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
+    var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
+    var EXTRA_PRICE = { outfit: 500, photos: 300, rush: 500 };
+    var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
+    Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
+    return total;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function bulletList(bullets) {
+    return '<ul class="bullet-list">' + bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>';
+  }
+
+  function tileHTML(item, selected, priceLabel, action, bullets) {
+    return '' +
+      '<button type="button" class="tile ' + (selected ? 'tile--selected' : '') + '" aria-pressed="' + (selected ? 'true' : 'false') + '" data-action="' + action + '" data-id="' + item.id + '">' +
+        '<div class="tile-top">' +
+          '<span class="tile-emoji" aria-hidden="true">' + item.emoji + '</span>' +
+          '<span class="tile-price">' + priceLabel + '</span>' +
+        '</div>' +
+        '<div class="tile-name">' + esc(item.name) + '</div>' +
+        (item.sub ? '<div class="tile-sub">' + esc(item.sub) + '</div>' : '') +
+        (bullets ? bulletList(bullets) : '') +
+        (selected ? '<span class="tile-check" aria-hidden="true">&#10003; Selected</span>' : '') +
+      '</button>';
+  }
+
+  function render() {
+    var s = state;
+
+    // ---- Persona grid (with computed totals) ----
+    var personaCards = PERSONAS.map(function (p) {
+      var total = calcTotalFor(p.session, p.mood, p.keepsake, p.extras || {});
+      var active = s.activePersona === p.id;
+      return '' +
+        '<a href="#summary" class="persona-card ' + (active ? 'persona-card--active' : '') + '" style="--stripe:' + p.stripe + ';" data-action="apply-persona" data-id="' + p.id + '">' +
+          '<span class="persona-emoji" aria-hidden="true">' + p.emoji + '</span>' +
+          '<div class="persona-name">' + esc(p.name) + '</div>' +
+          '<div class="persona-tag">' + esc(p.tag) + '</div>' +
+          '<p class="persona-desc">' + esc(p.desc) + '</p>' +
+          '<div class="persona-cta">Try This Era &mdash; from ' + fmt(total) + '</div>' +
+        '</a>';
+    }).join('');
+
+    var eraSection = '' +
+      '<section class="section" id="era">' +
+        '<div class="wrap">' +
+          '<div class="section-eyebrow">Start Here</div>' +
+          '<h2 class="section-title">What\'s Your Birthday Era?</h2>' +
+          '<p class="section-copy">Build every detail yourself, or start from a ready-made era and tweak it from there.</p>' +
+          '<div class="era-choice-row">' +
+            '<a href="#step1" class="era-option">' +
+              '<span class="era-option-emoji" aria-hidden="true">&#127912;</span>' +
+              '<div class="era-option-name">Create My Own</div>' +
+              '<p class="era-option-desc">Go through Session, Mood, and Keepsake yourself, step by step.</p>' +
+            '</a>' +
+            '<button type="button" class="era-option ' + (s.showPersonas ? 'era-option--active' : '') + '" aria-pressed="' + (s.showPersonas ? 'true' : 'false') + '" data-action="toggle-personas">' +
+              '<span class="era-option-emoji" aria-hidden="true">&#127873;</span>' +
+              '<div class="era-option-name">Pre-Picked</div>' +
+              '<p class="era-option-desc">Choose a ready-made birthday persona in one tap.</p>' +
+            '</button>' +
+          '</div>' +
+          (s.showPersonas ? '<div class="persona-grid">' + personaCards + '</div>' : '') +
+        '</div>' +
+      '</section>';
+
+    // ---- Step 1: Session ----
+    var sessionTiles = SESSIONS.map(function (x) {
+      return tileHTML(x, s.session === x.id, fmt(x.price), 'pick-session', x.bullets);
+    }).join('');
+
+    // ---- Step 2: Mood ----
+    var moodTiles = MOODS.map(function (x) {
+      var label = x.price === 0 ? 'Included' : '+' + fmt(x.price);
+      return tileHTML(x, s.mood === x.id, label, 'pick-mood', x.bullets);
+    }).join('');
+
+    var doubleSelected = s.mood === 'double';
+    var doubleTileHTML = '' +
+      '<button type="button" class="tile tile-double ' + (doubleSelected ? 'tile--selected' : '') + '" aria-pressed="' + (doubleSelected ? 'true' : 'false') + '" data-action="pick-mood" data-id="double">' +
+        '<div class="tile-top">' +
+          '<span class="tile-emoji" aria-hidden="true">🧥🪽</span>' +
+          '<span class="tile-price">+' + fmt(DOUBLE.price) + '</span>' +
+        '</div>' +
+        '<div class="tile-name">' + DOUBLE.name + '</div>' +
+        '<div class="tile-sub">' + DOUBLE.sub + '</div>' +
+        bulletList(DOUBLE.bullets) +
+        '<div class="double-row">' +
+          '<div class="double-side"><span class="double-emoji" aria-hidden="true">🧥</span><span>Fur Coat<br><small style="color:#7EC4B4;">dark, powerful editorial look</small></span></div>' +
+          '<div class="double-x">&times;</div>' +
+          '<div class="double-side"><span class="double-emoji" aria-hidden="true">🪽</span><span>Angel Wings<br><small style="color:#E3B34D;">ethereal, heavenly look</small></span></div>' +
+        '</div>' +
+        '<p class="double-tagline">One Birthday. Two Alter Egos.</p>' +
+        (doubleSelected ? '<span class="tile-check" aria-hidden="true">&#10003; Selected</span>' : '') +
+      '</button>';
+
+    // ---- Step 4: Keepsake ----
+    var keepsakeTiles = KEEPSAKES.map(function (x) {
+      var price = keepsakePrice(s.session, x.id);
+      var label = price === 0 ? 'Included' : '+' + fmt(price);
+      return tileHTML(x, s.keepsake === x.id, label, 'pick-keepsake', x.bullets);
+    }).join('');
+
+    // ---- Add-ons ----
+    var extraChips = EXTRAS.map(function (x) {
+      var active = !!s.extras[x.key];
+      return '' +
+        '<button type="button" class="chip ' + (active ? 'chip--active' : '') + '" aria-pressed="' + (active ? 'true' : 'false') + '" data-action="toggle-extra" data-id="' + x.key + '">' +
+          '<span>' + esc(x.name) + '</span><span class="chip-price">+' + fmt(x.price) + '</span>' +
+        '</button>';
+    }).join('');
+
+    // ---- Summary ----
+    var curSession = SESSIONS.filter(function (x) { return x.id === s.session; })[0];
+    var curMood = s.mood === 'double' ? DOUBLE : MOODS.filter(function (x) { return x.id === s.mood; })[0];
+    var curKeepsake = KEEPSAKES.filter(function (x) { return x.id === s.keepsake; })[0];
+    var keepsakePriceRaw = keepsakePrice(s.session, s.keepsake);
+    var moodPriceRaw = s.mood === 'double' ? DOUBLE.price : curMood.price;
+
+    var lineItems = [
+      { label: curSession.name + ' Session', priceLabel: fmt(curSession.price) },
+      { label: curMood.name, priceLabel: moodPriceRaw === 0 ? 'Included' : '+' + fmt(moodPriceRaw) },
+      { label: curKeepsake.name, priceLabel: keepsakePriceRaw === 0 ? 'Included' : '+' + fmt(keepsakePriceRaw) }
+    ];
+    var total = curSession.price + moodPriceRaw + keepsakePriceRaw;
+    var extraNames = [];
+    EXTRAS.forEach(function (x) {
+      if (s.extras[x.key]) { lineItems.push({ label: x.name, priceLabel: '+' + fmt(x.price) }); total += x.price; extraNames.push(x.name); }
+    });
+
+    var summaryLinesHTML = lineItems.map(function (li) {
+      return '<div class="summary-line"><span>' + esc(li.label) + '</span><span>' + li.priceLabel + '</span></div>';
+    }).join('');
+
+    // ---- Hand off to the real booking site's Schedule step ----
+    // Session length in minutes (Essential/Styled/Signature), +30 when the
+    // client picked the Double Signature mood (two looks = more time).
+    var pkgDur = s.session === 'essential' ? 30 : (s.session === 'styled' ? 60 : 90);
+    if (s.mood === 'double') pkgDur += 30;
+    var pkgLabel = 'ClickLounge Birthday Experience — ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
+    var pkgDesc = extraNames.length ? ('+' + extraNames.join(', +')) : '';
+    var continueHref = BOOKING_URL +
+      '?pkg=' + encodeURIComponent(pkgLabel) +
+      '&price=' + encodeURIComponent(total) +
+      '&desc=' + encodeURIComponent(pkgDesc) +
+      '&dur=' + encodeURIComponent(pkgDur);
+
+    var layoutSection = '' +
+      '<section class="section">' +
+        '<div class="wrap">' +
+          '<div class="layout">' +
+            '<div class="content-col">' +
+
+              '<div class="step-block" id="step1">' +
+                '<div class="step-eyebrow">Step 01</div>' +
+                '<h3 class="step-title">Pick Your Session</h3>' +
+                '<p class="step-copy">Essential, Styled, or Signature &mdash; your starting point and shoot time.</p>' +
+                '<div class="tile-grid">' + sessionTiles + '</div>' +
+                '<p class="step-note">Edited photos have a <strong>5&ndash;7 business day</strong> lead time.</p>' +
+              '</div>' +
+
+              '<div class="step-block">' +
+                '<div class="step-eyebrow">Step 02</div>' +
+                '<h3 class="step-title">Pick Your Mood</h3>' +
+                '<p class="step-copy">Your signature concept &mdash; the lighting, styling, and story of your shoot.</p>' +
+                '<div class="tile-grid">' + moodTiles + '</div>' +
+                '<div class="mm-callout">' +
+                  '<div class="mm-label">Signature ClickLounge Concept &mdash; Mix &amp; Match</div>' +
+                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double Signature session.</p>' +
+                '</div>' +
+                '<div class="tile-grid">' + doubleTileHTML + '</div>' +
+              '</div>' +
+
+              '<div class="step-block">' +
+                '<div class="step-eyebrow">Step 04</div>' +
+                '<h3 class="step-title">Pick Your Keepsake</h3>' +
+                '<p class="step-copy">More photos or a bigger print? Your call.</p>' +
+                '<div class="tile-grid tile-grid--4">' + keepsakeTiles + '</div>' +
+                '<div class="substep">' +
+                  '<h4 class="substep-title">Optional Add-Ons</h4>' +
+                  '<p class="substep-copy">A little more of what you want &mdash; stack as many as you like.</p>' +
+                  '<div class="chip-row">' + extraChips + '</div>' +
+                '</div>' +
+              '</div>' +
+
+            '</div>' +
+
+            '<aside class="summary" id="summary">' +
+              '<div class="summary-eyebrow">Your Build</div>' +
+              '<h3 class="summary-title">Your Birthday Look</h3>' +
+              '<div class="summary-lines">' + summaryLinesHTML + '</div>' +
+              '<div class="summary-total"><span>Total</span><span>' + fmt(total) + '</span></div>' +
+              '<button type="button" class="btn-primary" data-action="open-confirm">Book This Package</button>' +
+              '<p class="summary-note">Prices in Philippine Peso (&#8369;). Tap Book This Package to continue to your date and details.</p>' +
+            '</aside>' +
+
+          '</div>' +
+        '</div>' +
+      '</section>';
+
+    var modalHTML = '';
+    if (s.showConfirm) {
+      modalHTML = '' +
+        '<div class="modal-overlay" data-action="close-confirm-overlay">' +
+          '<div class="modal-card">' +
+            '<button type="button" class="modal-close" aria-label="Close" data-action="close-confirm">&times;</button>' +
+            '<div class="modal-eyebrow">&#10003; Package Ready</div>' +
+            '<h3 class="modal-title">Your ClickLounge Birthday Experience</h3>' +
+            '<div class="summary-lines">' + summaryLinesHTML + '</div>' +
+            '<div class="summary-total"><span>Total</span><span>' + fmt(total) + '</span></div>' +
+            '<p class="modal-note">Continue to booking to pick your date and lock in your birthday session.</p>' +
+            '<a href="' + continueHref + '" class="btn-primary">Continue to Booking &rarr;</a>' +
+            '<button type="button" class="btn-secondary" data-action="close-confirm">Back to Builder</button>' +
+          '</div>' +
+        '</div>';
+    }
+
+    document.getElementById('app').innerHTML = eraSection + layoutSection + modalHTML;
+  }
+
+  function applyPersona(id) {
+    var p = PERSONAS.filter(function (x) { return x.id === id; })[0];
+    if (!p) return;
+    setState({
+      session: p.session,
+      mood: p.mood,
+      keepsake: p.keepsake,
+      extras: p.extras || { outfit: false, photos: false, rush: false },
+      activePersona: p.id
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-action]') : null;
+    if (!el) return;
+    var action = el.getAttribute('data-action');
+    var id = el.getAttribute('data-id');
+
+    switch (action) {
+      case 'pick-session':
+        setState({ session: id, activePersona: null });
+        break;
+      case 'pick-mood':
+        setState({ mood: id, activePersona: null });
+        break;
+      case 'pick-keepsake':
+        setState({ keepsake: id, activePersona: null });
+        break;
+      case 'toggle-extra': {
+        var extras = Object.assign({}, state.extras);
+        extras[id] = !extras[id];
+        setState({ extras: extras, activePersona: null });
+        break;
+      }
+      case 'apply-persona':
+        applyPersona(id);
+        break;
+      case 'toggle-personas':
+        setState({ showPersonas: !state.showPersonas });
+        break;
+      case 'open-confirm':
+        setState({ showConfirm: true });
+        break;
+      case 'close-confirm':
+        setState({ showConfirm: false });
+        break;
+      case 'close-confirm-overlay':
+        if (e.target === el) setState({ showConfirm: false });
+        break;
+      default:
+        break;
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
