@@ -245,7 +245,7 @@
 
   function keepsakePrice(session, keepsake) {
     if (keepsake === 'digital') return 0;
-    if (keepsake === 'mini') return 300;
+    if (keepsake === 'mini') return 100;
     if (keepsake === 'wall') return session === 'signature' ? 0 : 1000;
     if (keepsake === 'acrylic') return session === 'signature' ? 1000 : 1500;
     return 0;
