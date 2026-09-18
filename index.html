@@ -191,8 +191,8 @@
 
   var SESSIONS = [
     { id: 'standard', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Fur coat available'] },
-    { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit', '3 edited photos', 'Basic hair & makeup', 'Selected studio outfit'] },
-    { id: 'prestige', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfits', '5 edited photos', 'Glam hair & makeup', '8×24 portrait included'] }
+    { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit*', '3 edited photos**', 'Basic hair & makeup', 'Selected studio outfit'] },
+    { id: 'prestige', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfits*', '5 edited photos**', 'Glam hair & makeup', '8×24 portrait included'] }
   ];
 
   var MOODS = [
@@ -201,7 +201,7 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Heavenly styling'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', 'Glam hair & makeup'] };
+  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', 'Glam hair & makeup', '+10 mins time'] };
 
   var KEEPSAKES = [
     { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
@@ -214,12 +214,13 @@
     { key: 'outfit', name: 'Additional Outfit Change', price: 500 },
     { key: 'photos', name: '+3 Edited Photos', price: 300 },
     { key: 'rush', name: 'Rush 24-Hour Delivery', price: 500 }
+    { key: 'time', name: '15 min add on', price: 500 }
   ];
 
   var PERSONAS = [
     { id: 'itgirl', emoji: '🖤', name: 'The It Girl', tag: 'Luxe Mode Coat Code', stripe: '#2E5C55', desc: 'Dark editorial lighting. Fur coat. Black styling.', session: 'styled', mood: 'coatcode', keepsake: 'digital' },
     { id: 'muse', emoji: '🪽', name: 'The Muse', tag: 'Angelic Muse', stripe: '#E3B34D', desc: 'Angel wings. Soft celestial lighting. Ethereal styling.', session: 'styled', mood: 'angelic', keepsake: 'mini' },
-    { id: 'mainchar', emoji: '✨', name: 'The Main Character', tag: 'Styleshots', stripe: '#C1603D', desc: 'Photographer-guided posing. Confident editorial portraits.', session: 'styled', mood: 'styleshots', keepsake: 'digital', extras: { outfit: true, photos: false, rush: false } },
+    { id: 'mainchar', emoji: '✨', name: 'The Main Character', tag: 'Styleshots', stripe: '#C1603D', desc: 'Photographer-guided posing. Confident editorial portraits.', session: 'styled', mood: 'styleshots', keepsake: 'digital', extras: { outfit: true, photos: false, rush: false, time: false } },
     { id: 'icon', emoji: '👑', name: 'The Icon', tag: 'Prestige', stripe: '#8C4A2F', desc: 'Unlimited shots. Multiple looks. Full glam. 8×24 portrait.', session: 'signature', mood: 'double', keepsake: 'wall' }
   ];
 
@@ -227,7 +228,7 @@
     session: 'styled',
     mood: 'styleshots',
     keepsake: 'digital',
-    extras: { outfit: false, photos: false, rush: false },
+    extras: { outfit: false, photos: false, rush: false, time: false },
     activePersona: null,
     showPersonas: false,
     showConfirm: false
@@ -254,7 +255,7 @@
   function calcTotalFor(session, mood, keepsake, extras) {
     var SESSION_PRICE = { standard: 1200, styled: 3000, prestige: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
-    var EXTRA_PRICE = { outfit: 500, photos: 300, rush: 500 };
+    var EXTRA_PRICE = { outfit: 500, photos: 300, rush: 500, time:700 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
     Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
     return total;
@@ -413,7 +414,8 @@
                 '<h3 class="step-title">Pick Your Session</h3>' +
                 '<p class="step-copy">Standard, Styled, or Prestige &mdash; your starting point and shoot time.</p>' +
                 '<div class="tile-grid">' + sessionTiles + '</div>' +
-                '<p class="step-note">Edited photos have a <strong>5&ndash;7 business day</strong> lead time.</p>' +
+                '<p class="step-note">**Edited photos have a <strong>5&ndash;7 business days</strong> lead time.</p>' +
+                '<p class="step-note">*Free use of available outfit/s' +
               '</div>' +
 
               '<div class="step-block">' +
@@ -482,7 +484,7 @@
       session: p.session,
       mood: p.mood,
       keepsake: p.keepsake,
-      extras: p.extras || { outfit: false, photos: false, rush: false },
+      extras: p.extras || { outfit: false, photos: false, rush: false, time: false },
       activePersona: p.id
     });
   }
