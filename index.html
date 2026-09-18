@@ -192,7 +192,7 @@
   var SESSIONS = [
     { id: 'essential', emoji: '📸', name: 'Essential', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Fur coat available'] },
     { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit', '3 edited photos', 'Basic hair & makeup', 'Selected studio outfit'] },
-    { id: 'signature', emoji: '👑', name: 'Signature', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfits', '5 edited photos', 'Glam hair & makeup', '8×24 portrait included'] }
+    { id: 'prestige', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfits', '5 edited photos', 'Glam hair & makeup', '8×24 portrait included'] }
   ];
 
   var MOODS = [
@@ -201,7 +201,7 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Heavenly styling'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'The Double Signature', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', 'Glam hair & makeup'] };
+  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', 'Glam hair & makeup'] };
 
   var KEEPSAKES = [
     { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
@@ -246,13 +246,13 @@
   function keepsakePrice(session, keepsake) {
     if (keepsake === 'digital') return 0;
     if (keepsake === 'mini') return 100;
-    if (keepsake === 'wall') return session === 'signature' ? 0 : 1000;
-    if (keepsake === 'acrylic') return session === 'signature' ? 1000 : 1500;
+    if (keepsake === 'wall') return session === 'prestige' ? 0 : 1000;
+    if (keepsake === 'acrylic') return session === 'prestige' ? 1000 : 1500;
     return 0;
   }
 
   function calcTotalFor(session, mood, keepsake, extras) {
-    var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
+    var SESSION_PRICE = { essential: 1200, styled: 3000, prestige: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
     var EXTRA_PRICE = { outfit: 500, photos: 300, rush: 500 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
@@ -390,8 +390,8 @@
     }).join('');
 
     // ---- Hand off to the real booking site's Schedule step ----
-    // Session length in minutes (Essential/Styled/Signature), +30 when the
-    // client picked the Double Signature mood (two looks = more time).
+    // Session length in minutes (Essential/Styled/Prestige), +30 when the
+    // client picked the Double Prestige mood (two looks = more time).
     var pkgDur = s.session === 'essential' ? 30 : (s.session === 'styled' ? 60 : 90);
     if (s.mood === 'double') pkgDur += 30;
     var pkgLabel = 'ClickLounge Birthday Experience — ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
@@ -411,7 +411,7 @@
               '<div class="step-block" id="step1">' +
                 '<div class="step-eyebrow">Step 01</div>' +
                 '<h3 class="step-title">Pick Your Session</h3>' +
-                '<p class="step-copy">Essential, Styled, or Signature &mdash; your starting point and shoot time.</p>' +
+                '<p class="step-copy">Essential, Styled, or Prestige &mdash; your starting point and shoot time.</p>' +
                 '<div class="tile-grid">' + sessionTiles + '</div>' +
                 '<p class="step-note">Edited photos have a <strong>5&ndash;7 business day</strong> lead time.</p>' +
               '</div>' +
@@ -423,7 +423,7 @@
                 '<div class="tile-grid">' + moodTiles + '</div>' +
                 '<div class="mm-callout">' +
                   '<div class="mm-label">Signature ClickLounge Concept &mdash; Mix &amp; Match</div>' +
-                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double Signature session.</p>' +
+                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double Prestige session.</p>' +
                 '</div>' +
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
               '</div>' +
