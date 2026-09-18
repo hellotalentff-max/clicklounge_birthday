@@ -211,6 +211,8 @@
   ];
 
   var EXTRAS = [
+    { key: '5R', name: '5R Framed 5x7in picture', price: 800 }
+    { key: '8R', name: '8R Framed 8x10in picture', price: 1000 }
     { key: 'outfit', name: 'Additional Outfit Change', price: 300 },
     { key: 'photos', name: '+3 Edited Photos', price: 500 },
     { key: 'rush', name: 'Rush 24-Hour Delivery', price: 500 },
@@ -228,7 +230,7 @@
     session: 'styled',
     mood: 'styleshots',
     keepsake: 'digital',
-    extras: { outfit: false, photos: false, rush: false, time: false },
+    extras: { outfit: false, photos: false, rush: false, time: false, 5R:false, 8R:false },
     activePersona: null,
     showPersonas: false,
     showConfirm: false
@@ -255,7 +257,7 @@
   function calcTotalFor(session, mood, keepsake, extras) {
     var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
-    var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700 };
+    var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700, 5R: 800, 8R:1000 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
     Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
     return total;
@@ -494,7 +496,7 @@
       session: p.session,
       mood: p.mood,
       keepsake: p.keepsake,
-      extras: p.extras || { outfit: false, photos: false, rush: false, time: false },
+      extras: p.extras || { outfit: false, photos: false, rush: false, time: false, 5R:false, 8R: false },
       activePersona: p.id
     });
   }
