@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -352,7 +353,7 @@
         (doubleSelected ? '<span class="tile-check" aria-hidden="true">&#10003; Selected</span>' : '') +
       '</button>';
 
-    // ---- Step 4: Keepsake ----
+    // ---- Step 3: Keepsake ----
     var keepsakeTiles = KEEPSAKES.map(function (x) {
       var price = keepsakePrice(s.session, x.id);
       var label = price === 0 ? 'Included' : '+' + fmt(price);
@@ -395,10 +396,17 @@
     // client picked the Double Signature mood (two looks = more time).
     var pkgDur = s.session === 'essential' ? 30 : (s.session === 'styled' ? 60 : 90);
     if (s.mood === 'double') pkgDur += 30;
-    var pkgLabel = 'ClickLounge Birthday Experience — ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
-    var pkgDesc = extraNames.length ? ('+' + extraNames.map(function (n) { return n.replace(/^\+/, ''); }).join(', +')) : '';
+    // Keep the booking site's package name short ("CBE" = ClickLounge
+    // Birthday Experience) — the full session/mood/keepsake breakdown goes
+    // in the description instead. The booking site appends the price and
+    // the client's name once they enter it, so the record reads
+    // "CBE - ₱9,500 - Juana Dela Cruz".
+    var pkgName = 'CBE';
+    var optionsLabel = curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
+    var extrasLabel = extraNames.length ? ('+' + extraNames.map(function (n) { return n.replace(/^\+/, ''); }).join(', +')) : '';
+    var pkgDesc = optionsLabel + (extrasLabel ? ' — ' + extrasLabel : '');
     var continueHref = BOOKING_URL +
-      '?pkg=' + encodeURIComponent(pkgLabel) +
+      '?pkg=' + encodeURIComponent(pkgName) +
       '&price=' + encodeURIComponent(total) +
       '&desc=' + encodeURIComponent(pkgDesc) +
       '&dur=' + encodeURIComponent(pkgDur);
