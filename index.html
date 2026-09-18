@@ -399,7 +399,14 @@
     // calendar reads and parses correctly. (The Review screen shows a
     // shorter "CBE - price - name" label to the client instead; that's
     // computed separately in the booking site and never sent here.)
-    var pkgLabel = 'ClickLounge Birthday Experience — ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
+    // IMPORTANT: this label must contain NO em dash ("—"). The POS reads
+    // calendar event titles formatted as "[PENDING] {package} — {name}
+    // (₱{amount} DP)" and splits on the FIRST em dash to separate the
+    // package from the client name. An em dash inside the package name
+    // itself (as this used to have) truncates the package and garbles the
+    // extracted client name, which is why bookings weren't showing up
+    // correctly in Pending Payments. Use a colon here instead.
+    var pkgLabel = 'ClickLounge Birthday Experience: ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
     var pkgDesc = extraNames.length ? ('+' + extraNames.map(function (n) { return n.replace(/^\+/, ''); }).join(', +')) : '';
     var continueHref = BOOKING_URL +
       '?pkg=' + encodeURIComponent(pkgLabel) +
