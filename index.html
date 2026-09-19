@@ -190,7 +190,7 @@
   var BOOKING_URL = "https://hellotalentff-max.github.io/clicklounge_booking/";
 
   var SESSIONS = [
-    { id: 'essential', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit'] },
+    { id: 'essential', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit', 'Optional: Choose either Angel Wings or Fur Coat'] },
     { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit change', 'Optional: Use of available outfits', '3 edited photos*', 'Basic hair & makeup'] },
     { id: 'signature', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfit change', '5 edited photos*', 'Hair and Glam Make up look', '8×24 portrait included'] }
   ];
@@ -201,7 +201,7 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'The Double Birthday Look', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', '+10 mins time'] };
+  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', '+10 mins time'] };
 
   var KEEPSAKES = [
     { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
@@ -211,8 +211,6 @@
   ];
 
   var EXTRAS = [
-    { key: '5R', name: '5R Framed 5x7in picture', price: 800 }
-    { key: '8R', name: '8R Framed 8x10in picture', price: 1000 }
     { key: 'outfit', name: 'Additional Outfit Change', price: 300 },
     { key: 'photos', name: '+3 Edited Photos', price: 500 },
     { key: 'rush', name: 'Rush 24-Hour Delivery', price: 500 },
@@ -230,7 +228,7 @@
     session: 'styled',
     mood: 'styleshots',
     keepsake: 'digital',
-    extras: { outfit: false, photos: false, rush: false, time: false, 5R:false, 8R:false },
+    extras: { outfit: false, photos: false, rush: false, time: false },
     activePersona: null,
     showPersonas: false,
     showConfirm: false
@@ -257,7 +255,7 @@
   function calcTotalFor(session, mood, keepsake, extras) {
     var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
-    var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700, 5R: 800, 8R:1000 };
+    var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
     Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
     return total;
@@ -437,7 +435,7 @@
                 '<div class="tile-grid">' + moodTiles + '</div>' +
                 '<div class="mm-callout">' +
                   '<div class="mm-label">Signature ClickLounge Concept &mdash; Mix &amp; Match</div>' +
-                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double Birthday Look session.</p>' +
+                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double Prestige session.</p>' +
                 '</div>' +
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
               '</div>' +
@@ -496,7 +494,7 @@
       session: p.session,
       mood: p.mood,
       keepsake: p.keepsake,
-      extras: p.extras || { outfit: false, photos: false, rush: false, time: false, 5R:false, 8R: false },
+      extras: p.extras || { outfit: false, photos: false, rush: false, time: false },
       activePersona: p.id
     });
   }
