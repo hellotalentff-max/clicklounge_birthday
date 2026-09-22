@@ -335,8 +335,9 @@
     if (a && a.rate != null) return a.rate;
     return d.photographerRate != null ? d.photographerRate : 0;                      // Package add-on price
   }
-  // The gown step only appears for Prestige with one of the styled moods.
-  function gownOK(session, mood) { return session === 'signature' && ['coatcode', 'angelic', 'double'].indexOf(mood) >= 0; }
+  // The gown step appears with the styled moods (Coat Code, Angelic Muse, Double Prestige).
+  // Prestige includes the gown; Standard and Styled pay the Package add-on rate.
+  function gownOK(session, mood) { return ['coatcode', 'angelic', 'double'].indexOf(mood) >= 0; }
   function pickedDress() {
     if (!state.dress || !state.dressList) return state.dress;
     return state.dressList.filter(function (x) { return x.name === state.dress.name; })[0] || state.dress;
@@ -643,8 +644,10 @@
               (gownAllowed
                 ? '<div class="step-block" id="gown">' +
                     '<div class="step-eyebrow">Step 03</div>' +
-                    '<h3 class="step-title">Choose Your Gown</h3>' +
-                    '<p class="step-copy">Your Prestige look includes a House of Roan gown &mdash; pick one of the available dresses.</p>' +
+                    '<h3 class="step-title">' + (isPrestige ? 'Choose Your Gown' : 'Add a Gown') + '</h3>' +
+                    '<p class="step-copy">' + (isPrestige
+                      ? 'Your Prestige look includes a House of Roan gown &mdash; pick one of the available dresses.'
+                      : 'Complete the look with a House of Roan gown, charged as a package add-on.') + '</p>' +
                     gownStep +
                   '</div>'
                 : '') +
