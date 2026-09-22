@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ClickLounge Birthday Experience</title>
-<meta name="description" content="Build your own birthday portrait package — mix and match your session, mood, and keepsake.">
+<meta name="description" content="Build your own birthday portrait package — mix and match your session, mood, gown and keepsake.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -125,6 +125,42 @@
   .modal-title { font-family: 'Poppins', sans-serif; font-size: 19px; margin: 8px 0 20px; font-weight: 600; color: var(--slate); }
   .modal-note { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
 
+  /* 👗 House of Roan gowns */
+  .gown-card { display: flex; gap: 18px; align-items: center; border: 1px solid var(--border); border-radius: 14px; padding: 18px; background: linear-gradient(135deg, #fdf5f1 0%, var(--white) 60%); box-shadow: 0 2px 8px rgba(47,79,79,.06); flex-wrap: wrap; }
+  .gown-card--on { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+  .gown-thumb { width: 84px; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg,#fdf0ee,#f5dcd8); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #c5a436; }
+  .gown-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gown-info { flex: 1; min-width: 180px; }
+  .gown-tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+  .gown-name { font-size: 16px; font-weight: 600; color: var(--slate); margin: 4px 0 2px; }
+  .gown-copy { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
+  .gown-actions { display: flex; flex-direction: column; gap: 8px; min-width: 190px; }
+  .btn-sm { display: block; border-radius: 10px; padding: 10px 14px; font-weight: 600; font-size: 12px; cursor: pointer; text-align: center; box-sizing: border-box; border: 1.5px solid var(--teal); background: var(--white); color: var(--teal); }
+  .btn-sm--fill { background: var(--teal); color: #fff; }
+  .btn-sm--msg { background: #0866ff; border-color: #0866ff; color: #fff; }
+  .btn-link { background: none; border: none; color: var(--muted); font-size: 11px; cursor: pointer; text-decoration: underline; padding: 2px; }
+  .gown-modal { max-width: 860px; max-height: calc(100vh - 48px); overflow-y: auto; }
+  .gown-bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin: 0 0 16px; font-size: 12px; color: var(--muted); }
+  .gown-bar input[type=date] { font-family: inherit; font-size: 13px; padding: 8px 10px; border: 1.5px solid var(--light2); border-radius: 8px; color: var(--text); }
+  .gown-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+  .gown-tile { border: 1.5px solid var(--light2); border-radius: 12px; overflow: hidden; background: var(--white); text-align: left; padding: 0; cursor: pointer; position: relative; font-family: inherit; }
+  .gown-tile:hover { border-color: var(--gold); }
+  .gown-tile--on { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(81,137,125,.25); }
+  .gown-tile--on::after { content: '\2713'; position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .gown-tile[disabled] { cursor: not-allowed; opacity: .55; }
+  .gown-tile .gown-thumb { width: 100%; border-radius: 0; }
+  .gown-meta { padding: 8px 10px 10px; }
+  .gown-meta b { display: block; font-size: 13px; color: var(--slate); }
+  .gown-price { font-size: 12px; font-weight: 700; color: var(--gold); }
+  .gown-price--free { color: var(--teal); }
+  .gown-badge { display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; }
+  .gown-badge--ok { background: rgba(81,137,125,.12); color: var(--teal-dk); }
+  .gown-badge--no { background: #fbe9e4; color: #a0452c; }
+  .gown-foot { position: sticky; bottom: -30px; background: var(--white); border-top: 1px solid var(--light2); margin: 18px -30px -30px; padding: 14px 30px 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .gown-foot p { margin: 0; font-size: 12px; color: var(--muted); flex: 1; min-width: 200px; }
+  .gown-msg-note { font-size: 11px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
+  @media (max-width: 700px) { .gown-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .gown-actions { width: 100%; } .modal-overlay { padding: 12px; } .gown-modal { padding: 22px 18px; max-height: calc(100vh - 24px); } .gown-foot { margin: 18px -18px -22px; padding: 12px 18px 16px; bottom: -22px; } }
+
   .footer { padding: 36px 0 52px; text-align: center; font-size: 11px; color: var(--muted); border-top: 1px solid var(--light2); line-height: 1.7; }
 
   button:focus-visible, a:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
@@ -201,7 +237,12 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', '+10 mins time'] };
+  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
+
+  // 👗 House of Roan gowns — live list, prices and availability from the dress system
+  var DRESS_API  = 'https://script.google.com/macros/s/AKfycbzxb4jzWZ8IWijNr-q63t-n4pZUu7QOlsPDFCHHk_CXjIjD8EIu2eGWfoGPQIo4z6eT/exec';
+  var DRESS_SITE = 'https://hellotalentff-max.github.io/hordr-dresses/';
+  var MESSENGER  = 'https://m.me/clicklounge.studio';
 
   var KEEPSAKES = [
     { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
@@ -232,6 +273,8 @@
     keepsake: 'digital',
     extras: { outfit: false, photos: false, rush: false, time: false, framed5r: false, framed8r: false },
     activePersona: null,
+    dress: null,            // { name } — the gown the client picked
+    showDresses: false, dressDate: '', dressList: null, dressAvail: null, dressLoading: false, dressErr: '',
     showPersonas: false,
     showConfirm: false
   };
@@ -246,10 +289,18 @@
     return sign + '₱' + Math.abs(n).toLocaleString('en-PH');
   }
 
-  function keepsakePrice(session, keepsake) {
+  // Signature Wall is only offered with The Double Prestige, which includes it.
+  // With Double Prestige, Digital and Mini are covered too, so they're not shown.
+  function keepsakeOptions(mood) {
+    return KEEPSAKES.filter(function (x) {
+      if (mood === 'double') return x.id === 'wall' || x.id === 'acrylic';
+      return x.id !== 'wall';
+    });
+  }
+  function keepsakePrice(session, keepsake, mood) {
     if (keepsake === 'digital') return 0;
     if (keepsake === 'mini') return 100;
-    if (keepsake === 'wall') return session === 'signature' ? 0 : 1000;
+    if (keepsake === 'wall') return mood === 'double' || session === 'signature' ? 0 : 1000;
     if (keepsake === 'acrylic') return session === 'signature' ? 1000 : 1500;
     return 0;
   }
@@ -258,9 +309,79 @@
     var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
     var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700, framed5r: 800, framed8r: 1000 };
-    var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake);
+    var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake, mood);
     Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
     return total;
+  }
+
+  // ---- 👗 gown helpers ----
+  function dressCo() { return state.session === 'signature' ? 'CLS Prestige' : 'CLS Photographer'; }
+  function dressSlug(n) { return String(n || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function dressPhoto(d) {
+    var m = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/.exec(d.photo || '');
+    return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w400' : (d.photo || DRESS_SITE + 'dresses/' + dressSlug(d.name) + '.jpg');
+  }
+  // try .jpg → .jpeg → .png → .webp, then fall back to the first letter
+  window.gownImgFail = function (img) {
+    var exts = ['.jpeg', '.png', '.webp'], i = +(img.getAttribute('data-try') || 0);
+    if (/\/dresses\/[^/]+\.\w+$/.test(img.src) && i < exts.length) { img.setAttribute('data-try', i + 1); img.src = img.src.replace(/\.\w+$/, exts[i]); return; }
+    img.parentNode.textContent = img.alt.charAt(0);
+  };
+  function gownImg(d) { return '<img src="' + esc(dressPhoto(d)) + '" alt="' + esc(d.name) + '" loading="lazy" onerror="gownImgFail(this)">'; }
+  function dressRateOf(d) {
+    if (!d) return 0;
+    if (state.session === 'signature') return 0;                                    // Prestige: gown included
+    var a = state.dressAvail && state.dressAvail.filter(function (x) { return x.name === d.name; })[0];
+    if (a && a.rate != null) return a.rate;
+    return d.photographerRate != null ? d.photographerRate : 0;                      // Package add-on price
+  }
+  function pickedDress() {
+    if (!state.dress || !state.dressList) return state.dress;
+    return state.dressList.filter(function (x) { return x.name === state.dress.name; })[0] || state.dress;
+  }
+  function fmtDay(iso) { var p = iso.split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])).toLocaleDateString('en-PH', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+  // Google sometimes answers with an HTML page instead of data (a hiccup after a deploy).
+  // Wait a moment and try again before giving up.
+  function dressFetch(url, tries) {
+    tries = tries || 3;
+    return fetch(url).then(function (r) { return r.text(); }).then(function (t) {
+      var j;
+      try { j = JSON.parse(t); } catch (e) {
+        if (tries > 1) return new Promise(function (res) { setTimeout(res, 700); }).then(function () { return dressFetch(url, tries - 1); });
+        throw new Error('The gown list didn\'t load just now. Please try again in a moment.');
+      }
+      if (!j.ok) throw new Error(j.error);
+      return j.data;
+    });
+  }
+  function loadDresses() {
+    if (state.dressList || state.dressLoading) return;
+    setState({ dressLoading: true, dressErr: '' });
+    dressFetch(DRESS_API + '?action=dresses').then(function (data) { var j = { ok: true, data: data };
+      if (!j.ok) throw new Error(j.error);
+      setState({ dressList: j.data, dressLoading: false });
+      if (state.dressDate) loadAvailability();
+    }).catch(function (e) { setState({ dressLoading: false, dressErr: (e && e.message) || 'We couldn\'t load the gowns right now. Message us and we\'ll send the list.' }); });
+  }
+  function loadAvailability() {
+    var date = state.dressDate, co = dressCo();
+    if (!date) { setState({ dressAvail: null }); return; }
+    setState({ dressLoading: true });
+    dressFetch(DRESS_API + '?action=availability&date=' + encodeURIComponent(date) + '&co=' + encodeURIComponent(co))
+      .then(function (data) { var j = { ok: true, data: data };
+        if (date !== state.dressDate) return;                                       // client changed the date meanwhile
+        if (!j.ok) throw new Error(j.error);
+        var patch = { dressAvail: j.data.dresses, dressLoading: false, dressErr: '' };
+        var cur = state.dress && j.data.dresses.filter(function (x) { return x.name === state.dress.name; })[0];
+        if (cur && cur.status !== 'Available') patch.dress = null;                   // their pick is taken that day
+        setState(patch);
+      }).catch(function (e) { setState({ dressLoading: false, dressAvail: null, dressErr: String(e.message || 'Could not check that date.') }); });
+  }
+  function dressMessage(sessionName) {
+    var d = state.dress, rate = dressRateOf(pickedDress());
+    return 'Hi Click Lounge Studio! I\'d like to book the House of Roan gown "' + d.name + '" for my ClickLounge Birthday Experience (' +
+      sessionName + ' session · ' + (rate === 0 ? 'gown included with Prestige' : 'Premium Dress add-on ' + fmt(rate)) + '). ' +
+      (state.dressDate ? 'My shoot date: ' + fmtDay(state.dressDate) + '.' : 'I\'ll choose my shoot date on the booking page.') + ' Thank you!';
   }
 
   function esc(s) {
@@ -355,11 +476,79 @@
       '</button>';
 
     // ---- Step 4: Keepsake ----
-    var keepsakeTiles = KEEPSAKES.map(function (x) {
-      var price = keepsakePrice(s.session, x.id);
-      var label = price === 0 ? 'Included' : '+' + fmt(price);
+    var keepsakeTiles = keepsakeOptions(s.mood).map(function (x) {
+      var price = keepsakePrice(s.session, x.id, s.mood);
+      var label = price === 0 ? (x.id === 'wall' && s.mood === 'double' ? 'Included with Double Prestige' : 'Included') : '+' + fmt(price);
       return tileHTML(x, s.keepsake === x.id, label, 'pick-keepsake', x.bullets);
     }).join('');
+
+    // ---- Step 3: Gown (House of Roan) ----
+    var isPrestige = s.session === 'signature';
+    var gownNow = pickedDress();
+    var msgHref = gownNow ? MESSENGER + '?text=' + encodeURIComponent(dressMessage(SESSIONS.filter(function (x) { return x.id === s.session; })[0].name)) : '';
+    var cheapest = (s.dressList || []).map(function (d) { return d.photographerRate; }).filter(function (v) { return v != null; });
+    var fromLabel = cheapest.length ? 'from ' + fmt(Math.min.apply(null, cheapest)) : 'per gown';
+    var gownStep = '' +
+      '<div class="gown-card ' + (gownNow ? 'gown-card--on' : '') + '">' +
+        '<div class="gown-thumb">' + (gownNow ? gownImg(gownNow) : '👗') + '</div>' +
+        '<div class="gown-info">' +
+          '<div class="gown-tag">' + (isPrestige ? 'Included with Prestige' : 'Premium Dress · Package add-on') + '</div>' +
+          (gownNow
+            ? '<div class="gown-name">' + esc(gownNow.name) + ' &middot; ' + (dressRateOf(gownNow) === 0 ? 'Included' : '+' + fmt(dressRateOf(gownNow))) + '</div>' +
+              '<p class="gown-copy">' + (s.dressDate ? 'Available on ' + esc(fmtDay(s.dressDate)) + '. ' : '') + 'Send us a message to reserve it for your shoot.</p>'
+            : '<div class="gown-name">' + (isPrestige ? 'Your gown is included' : 'Add a House of Roan gown') + '</div>' +
+              '<p class="gown-copy">' + (isPrestige
+                ? 'Choose any available gown from the House of Roan collection &mdash; no extra charge.'
+                : 'Optional. Wear a premium House of Roan gown for your shoot, ' + fromLabel + '.') + '</p>') +
+        '</div>' +
+        '<div class="gown-actions">' +
+          (gownNow
+            ? '<a class="btn-sm btn-sm--msg" href="' + esc(msgHref) + '" target="_blank" rel="noopener" data-action="message-dress">&#128172; Message CLS to book this gown</a>' +
+              '<button type="button" class="btn-sm" data-action="open-dresses">Change gown</button>' +
+              '<button type="button" class="btn-link" data-action="clear-dress">' + (isPrestige ? 'I\'ll bring my own outfit' : 'Remove gown') + '</button>'
+            : '<button type="button" class="btn-sm btn-sm--fill" data-action="open-dresses">' + (isPrestige ? 'Choose your gown' : 'Browse premium dresses') + '</button>') +
+        '</div>' +
+      '</div>' +
+      (gownNow ? '<p class="gown-msg-note">Your message is copied too, in case it doesn\'t appear in Messenger &mdash; just paste it. Gowns are reserved once we reply.</p>' : '');
+
+    // ---- Gown picker pop-up ----
+    var gownModal = '';
+    if (s.showDresses) {
+      var avail = {};
+      (s.dressAvail || []).forEach(function (a) { avail[a.name] = a; });
+      var today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);          // Manila today
+      var tiles = (s.dressList || []).map(function (d) {
+        var a = avail[d.name], taken = a && a.status !== 'Available';
+        var rate = isPrestige ? 0 : (a && a.rate != null ? a.rate : d.photographerRate);
+        var on = gownNow && gownNow.name === d.name;
+        return '<button type="button" class="gown-tile ' + (on ? 'gown-tile--on' : '') + '" data-action="pick-dress" data-id="' + esc(d.name) + '"' + (taken ? ' disabled' : '') + '>' +
+          '<div class="gown-thumb">' + gownImg(d) + '</div>' +
+          '<div class="gown-meta"><b>' + esc(d.name) + '</b>' +
+            '<span class="gown-price ' + (rate === 0 ? 'gown-price--free' : '') + '">' + (rate === 0 ? 'Included' : rate == null ? '' : '+' + fmt(rate)) + '</span>' +
+            (a ? '<br><span class="gown-badge ' + (taken ? 'gown-badge--no' : 'gown-badge--ok') + '">' + (taken ? 'Booked' + (a.nextFreeFrom ? ' · free ' + esc(fmtDay(a.nextFreeFrom).replace(/, \d{4}$/, '')) : '') : 'Available') + '</span>' : '') +
+          '</div></button>';
+      }).join('');
+      var freeCount = s.dressAvail ? s.dressAvail.filter(function (a) { return a.status === 'Available'; }).length : 0;
+      gownModal = '' +
+        '<div class="modal-overlay" data-action="close-dresses-overlay">' +
+          '<div class="modal-card gown-modal" role="dialog" aria-modal="true" aria-label="Choose a gown">' +
+            '<button type="button" class="modal-close" aria-label="Close" data-action="close-dresses">&times;</button>' +
+            '<div class="modal-eyebrow">House of Roan &times; Click Lounge Studio</div>' +
+            '<h3 class="modal-title" style="margin-bottom:8px;">' + (isPrestige ? 'Choose your included gown' : 'Premium dresses &middot; Package add-on') + '</h3>' +
+            '<div class="gown-bar"><label for="gown-date"><b style="color:var(--slate);">Your shoot date</b> &mdash; see which gowns are free</label>' +
+              '<input type="date" id="gown-date" min="' + today + '" value="' + esc(s.dressDate) + '">' +
+              (s.dressLoading ? '<span>Checking&hellip;</span>' : s.dressAvail ? '<span>' + freeCount + ' of ' + s.dressAvail.length + ' free on ' + esc(fmtDay(s.dressDate)) + '</span>' : '<span>Pick a date to check availability.</span>') +
+            '</div>' +
+            (s.dressErr ? '<p class="gown-copy" style="color:#a0452c;margin-bottom:12px;">' + esc(s.dressErr) + '</p>' : '') +
+            (s.dressList ? '<div class="gown-grid">' + tiles + '</div>' : '<p class="gown-copy">' + (s.dressLoading ? 'Loading the collection&hellip;' : '') + '</p>') +
+            '<div class="gown-foot">' +
+              '<p>' + (gownNow ? '<b style="color:var(--slate);">' + esc(gownNow.name) + '</b> selected. Message us to book it.' : 'Tap a gown to choose it. Booked gowns can\'t be picked for that date.') + '</p>' +
+              (gownNow ? '<a class="btn-sm btn-sm--msg" href="' + esc(msgHref) + '" target="_blank" rel="noopener" data-action="message-dress">&#128172; Message CLS to book</a>' : '') +
+              '<button type="button" class="btn-sm btn-sm--fill" data-action="close-dresses">Done</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
 
     // ---- Add-ons ----
     var extraChips = EXTRAS.map(function (x) {
@@ -374,7 +563,7 @@
     var curSession = SESSIONS.filter(function (x) { return x.id === s.session; })[0];
     var curMood = s.mood === 'double' ? DOUBLE : MOODS.filter(function (x) { return x.id === s.mood; })[0];
     var curKeepsake = KEEPSAKES.filter(function (x) { return x.id === s.keepsake; })[0];
-    var keepsakePriceRaw = keepsakePrice(s.session, s.keepsake);
+    var keepsakePriceRaw = keepsakePrice(s.session, s.keepsake, s.mood);
     var moodPriceRaw = s.mood === 'double' ? DOUBLE.price : curMood.price;
 
     var lineItems = [
@@ -383,6 +572,11 @@
       { label: curKeepsake.name, priceLabel: keepsakePriceRaw === 0 ? 'Included' : '+' + fmt(keepsakePriceRaw) }
     ];
     var total = curSession.price + moodPriceRaw + keepsakePriceRaw;
+    var gown = pickedDress(), gownRate = gown ? dressRateOf(gown) : 0;
+    if (gown) {
+      lineItems.push({ label: 'Gown: ' + gown.name + ' (House of Roan)', priceLabel: gownRate === 0 ? 'Included' : '+' + fmt(gownRate) });
+      total += gownRate;
+    }
     var extraNames = [];
     EXTRAS.forEach(function (x) {
       if (s.extras[x.key]) { lineItems.push({ label: x.name, priceLabel: '+' + fmt(x.price) }); total += x.price; extraNames.push(x.name); }
@@ -410,6 +604,7 @@
     // correctly in Pending Payments. Use a colon here instead.
     var pkgLabel = 'ClickLounge Birthday Experience: ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
     var pkgDesc = extraNames.length ? ('+' + extraNames.map(function (n) { return n.replace(/^\+/, ''); }).join(', +')) : '';
+    if (gown) pkgDesc = (pkgDesc ? pkgDesc + ' · ' : '') + 'Gown: ' + gown.name + (gownRate ? ' (+' + fmt(gownRate) + ')' : ' (included)');
     var continueHref = BOOKING_URL +
       '?pkg=' + encodeURIComponent(pkgLabel) +
       '&price=' + encodeURIComponent(total) +
@@ -442,8 +637,15 @@
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
               '</div>' +
 
-              '<div class="step-block">' +
+              '<div class="step-block" id="gown">' +
                 '<div class="step-eyebrow">Step 03</div>' +
+                '<h3 class="step-title">' + (isPrestige ? 'Choose Your Gown' : 'Premium Dress (optional)') + '</h3>' +
+                '<p class="step-copy">' + (isPrestige ? 'Prestige includes a House of Roan gown &mdash; choose from the available dresses.' : 'Add a House of Roan gown as a package add-on. Check which ones are free on your date.') + '</p>' +
+                gownStep +
+              '</div>' +
+
+              '<div class="step-block">' +
+                '<div class="step-eyebrow">Step 04</div>' +
                 '<h3 class="step-title">Pick Your Keepsake</h3>' +
                 '<p class="step-copy">More photos or a bigger print? Your call.</p>' +
                 '<div class="tile-grid tile-grid--4">' + keepsakeTiles + '</div>' +
@@ -486,7 +688,8 @@
         '</div>';
     }
 
-    document.getElementById('app').innerHTML = eraSection + layoutSection + modalHTML;
+    document.getElementById('app').innerHTML = eraSection + layoutSection + modalHTML + gownModal;
+    document.body.style.overflow = s.showDresses ? 'hidden' : '';
   }
 
   function applyPersona(id) {
@@ -508,12 +711,40 @@
     var id = el.getAttribute('data-id');
 
     switch (action) {
-      case 'pick-session':
+      case 'pick-session': {
+        var wasPrestige = state.session === 'signature';
         setState({ session: id, activePersona: null });
+        if (wasPrestige !== (id === 'signature') && state.dressDate) loadAvailability();   // price & rules differ per package
         break;
-      case 'pick-mood':
-        setState({ mood: id, activePersona: null });
+      }
+      case 'open-dresses':
+        setState({ showDresses: true });
+        loadDresses();
         break;
+      case 'close-dresses':
+        setState({ showDresses: false });
+        break;
+      case 'close-dresses-overlay':
+        if (e.target === el) setState({ showDresses: false });
+        break;
+      case 'pick-dress':
+        if (el.disabled) break;
+        setState({ dress: state.dress && state.dress.name === id ? null : { name: id } });
+        break;
+      case 'clear-dress':
+        setState({ dress: null });
+        break;
+      case 'message-dress':
+        try { navigator.clipboard && navigator.clipboard.writeText(dressMessage(SESSIONS.filter(function (x) { return x.id === state.session; })[0].name)); } catch (err) {}
+        return;                                                                     // let the link open Messenger
+      case 'pick-mood': {
+        // Double Prestige includes the Signature Wall; other moods can't have it
+        var kp = state.keepsake;
+        if (id === 'double' && (kp === 'digital' || kp === 'mini')) kp = 'wall';
+        if (id !== 'double' && kp === 'wall') kp = 'digital';
+        setState({ mood: id, keepsake: kp, activePersona: null });
+        break;
+      }
       case 'pick-keepsake':
         setState({ keepsake: id, activePersona: null });
         break;
@@ -542,6 +773,11 @@
         break;
     }
   });
+
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'gown-date') { setState({ dressDate: e.target.value }); loadAvailability(); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.showDresses) setState({ showDresses: false }); });
 
   render();
 })();
