@@ -335,6 +335,8 @@
     if (a && a.rate != null) return a.rate;
     return d.photographerRate != null ? d.photographerRate : 0;                      // Package add-on price
   }
+  // The gown step only appears for Prestige with one of the styled moods.
+  function gownOK(session, mood) { return session === 'signature' && ['coatcode', 'angelic', 'double'].indexOf(mood) >= 0; }
   function pickedDress() {
     if (!state.dress || !state.dressList) return state.dress;
     return state.dressList.filter(function (x) { return x.name === state.dress.name; })[0] || state.dress;
@@ -484,7 +486,8 @@
 
     // ---- Step 3: Gown (House of Roan) ----
     var isPrestige = s.session === 'signature';
-    var gownNow = pickedDress();
+    var gownAllowed = gownOK(s.session, s.mood);
+    var gownNow = gownAllowed ? pickedDress() : null;
     var msgHref = gownNow ? MESSENGER + '?text=' + encodeURIComponent(dressMessage(SESSIONS.filter(function (x) { return x.id === s.session; })[0].name)) : '';
     var cheapest = (s.dressList || []).map(function (d) { return d.photographerRate; }).filter(function (v) { return v != null; });
     var fromLabel = cheapest.length ? 'from ' + fmt(Math.min.apply(null, cheapest)) : 'per gown';
@@ -513,7 +516,7 @@
 
     // ---- Gown picker pop-up ----
     var gownModal = '';
-    if (s.showDresses) {
+    if (s.showDresses && gownAllowed) {
       var avail = {};
       (s.dressAvail || []).forEach(function (a) { avail[a.name] = a; });
       var today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);          // Manila today
@@ -572,7 +575,7 @@
       { label: curKeepsake.name, priceLabel: keepsakePriceRaw === 0 ? 'Included' : '+' + fmt(keepsakePriceRaw) }
     ];
     var total = curSession.price + moodPriceRaw + keepsakePriceRaw;
-    var gown = pickedDress(), gownRate = gown ? dressRateOf(gown) : 0;
+    var gown = gownAllowed ? pickedDress() : null, gownRate = gown ? dressRateOf(gown) : 0;
     if (gown) {
       lineItems.push({ label: 'Gown: ' + gown.name + ' (House of Roan)', priceLabel: gownRate === 0 ? 'Included' : '+' + fmt(gownRate) });
       total += gownRate;
@@ -637,15 +640,17 @@
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
               '</div>' +
 
-              '<div class="step-block" id="gown">' +
-                '<div class="step-eyebrow">Step 03</div>' +
-                '<h3 class="step-title">' + (isPrestige ? 'Choose Your Gown' : 'Premium Dress (optional)') + '</h3>' +
-                '<p class="step-copy">' + (isPrestige ? 'Prestige includes a House of Roan gown &mdash; choose from the available dresses.' : 'Add a House of Roan gown as a package add-on. Check which ones are free on your date.') + '</p>' +
-                gownStep +
-              '</div>' +
+              (gownAllowed
+                ? '<div class="step-block" id="gown">' +
+                    '<div class="step-eyebrow">Step 03</div>' +
+                    '<h3 class="step-title">Choose Your Gown</h3>' +
+                    '<p class="step-copy">Your Prestige look includes a House of Roan gown &mdash; pick one of the available dresses.</p>' +
+                    gownStep +
+                  '</div>'
+                : '') +
 
               '<div class="step-block">' +
-                '<div class="step-eyebrow">Step 04</div>' +
+                '<div class="step-eyebrow">Step 0' + (gownAllowed ? '4' : '3') + '</div>' +
                 '<h3 class="step-title">Pick Your Keepsake</h3>' +
                 '<p class="step-copy">More photos or a bigger print? Your call.</p>' +
                 '<div class="tile-grid tile-grid--4">' + keepsakeTiles + '</div>' +
@@ -713,7 +718,7 @@
     switch (action) {
       case 'pick-session': {
         var wasPrestige = state.session === 'signature';
-        setState({ session: id, activePersona: null });
+        setState({ session: id, activePersona: null, dress: gownOK(id, state.mood) ? state.dress : null });
         if (wasPrestige !== (id === 'signature') && state.dressDate) loadAvailability();   // price & rules differ per package
         break;
       }
@@ -742,7 +747,7 @@
         var kp = state.keepsake;
         if (id === 'double' && (kp === 'digital' || kp === 'mini')) kp = 'wall';
         if (id !== 'double' && kp === 'wall') kp = 'digital';
-        setState({ mood: id, keepsake: kp, activePersona: null });
+        setState({ mood: id, keepsake: kp, activePersona: null, dress: gownOK(state.session, id) ? state.dress : null });
         break;
       }
       case 'pick-keepsake':
