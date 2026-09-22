@@ -335,9 +335,9 @@
     if (a && a.rate != null) return a.rate;
     return d.photographerRate != null ? d.photographerRate : 0;                      // Package add-on price
   }
-  // The gown step appears with the styled moods (Coat Code, Angelic Muse, Double Prestige).
+  // The gown step shows everywhere except Prestige + Styleshots.
   // Prestige includes the gown; Standard and Styled pay the Package add-on rate.
-  function gownOK(session, mood) { return ['coatcode', 'angelic', 'double'].indexOf(mood) >= 0; }
+  function gownOK(session, mood) { return !(session === 'signature' && mood === 'styleshots'); }
   function pickedDress() {
     if (!state.dress || !state.dressList) return state.dress;
     return state.dressList.filter(function (x) { return x.name === state.dress.name; })[0] || state.dress;
