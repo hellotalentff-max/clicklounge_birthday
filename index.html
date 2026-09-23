@@ -56,6 +56,8 @@
 
   .layout { display: flex; gap: 40px; align-items: flex-start; }
   .content-col { flex: 1; min-width: 0; }
+  .layout--summary { justify-content: center; }
+  .layout--summary .summary { margin: 0 auto; position: static; }
   .summary { width: 340px; flex-shrink: 0; position: sticky; top: 24px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: 0 2px 8px rgba(47,79,79,.06); box-sizing: border-box; }
 
   .step-block + .step-block { margin-top: 44px; }
@@ -236,8 +238,8 @@
 
   var MOODS = [
     { id: 'styleshots', emoji: '✨', name: 'Styleshots', sub: 'Modern / Clean / Confident', price: 0, bullets: ['Photographer-guided posing', 'Contemporary lighting', 'Personalized portrait direction', 'Standard lighting'] },
-    { id: 'coatcode', emoji: '🖤', name: 'The Coat Code', sub: 'Luxury / Bold / Fashion', price: 500, bullets: ['Signature fur coat', 'Dark editorial lighting', 'High-fashion posing', 'Foil styling'] },
-    { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling'] }
+    { id: 'coatcode', emoji: '🖤', name: 'The Coat Code', sub: 'Luxury / Bold / Fashion', price: 800, bullets: ['Signature fur coat', 'Dark editorial lighting', 'High-fashion posing', 'Foil styling', '+10 mins shoot'] },
+    { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 800, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling', '+10 mins shoot'] }
   ];
 
   var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
@@ -278,6 +280,7 @@
     activePersona: null,
     dress: null,            // { name } — the gown the client picked
     showDresses: false, dressDate: '', dressList: null, dressAvail: null, dressLoading: false, dressErr: '',
+    showBuilder: false,     // the steps appear once the client taps "Create My Own"
     showPersonas: false,
     showConfirm: false
   };
@@ -310,7 +313,7 @@
 
   function calcTotalFor(session, mood, keepsake, extras) {
     var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
-    var MOOD_PRICE = { styleshots: 0, coatcode: 500, angelic: 500, double: 1500 };
+    var MOOD_PRICE = { styleshots: 0, coatcode: 800, angelic: 800, double: 1500 };
     var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700, framed5r: 800, framed8r: 1000 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake, mood);
     Object.keys(extras || {}).forEach(function (k) { if (extras[k]) total += EXTRA_PRICE[k] || 0; });
@@ -436,11 +439,11 @@
           '<h2 class="section-title">What\'s Your Look?</h2>' +
           '<p class="section-copy">Build every detail yourself, or start from a ready-made look and tweak it from there.</p>' +
           '<div class="era-choice-row">' +
-            '<a href="#step1" class="era-option">' +
+            '<button type="button" class="era-option ' + (s.showBuilder ? 'era-option--active' : '') + '" aria-pressed="' + (s.showBuilder ? 'true' : 'false') + '" data-action="toggle-builder">' +
               '<span class="era-option-emoji" aria-hidden="true">&#127912;</span>' +
               '<div class="era-option-name">Create My Own</div>' +
-              '<p class="era-option-desc">Go through Session, Mood, and Keepsake yourself, step by step.</p>' +
-            '</a>' +
+              '<p class="era-option-desc">Go through Session, Mood, Gown and Keepsake yourself, step by step.</p>' +
+            '</button>' +
             '<button type="button" class="era-option ' + (s.showPersonas ? 'era-option--active' : '') + '" aria-pressed="' + (s.showPersonas ? 'true' : 'false') + '" data-action="toggle-personas">' +
               '<span class="era-option-emoji" aria-hidden="true">&#127873;</span>' +
               '<div class="era-option-name">Pre-Picked</div>' +
@@ -598,6 +601,7 @@
     // client picked the Double Signature mood (two looks = more time).
     var pkgDur = s.session === 'essential' ? 30 : (s.session === 'styled' ? 60 : 90);
     if (s.mood === 'double') pkgDur += 30;
+    else if (s.mood === 'coatcode' || s.mood === 'angelic') pkgDur += 10;   // the +10 mins these looks include
     // Send the full descriptive package name — this is what the POS/booking
     // calendar reads and parses correctly. (The Review screen shows a
     // shorter "CBE - price - name" label to the client instead; that's
@@ -621,8 +625,8 @@
     var layoutSection = '' +
       '<section class="section">' +
         '<div class="wrap">' +
-          '<div class="layout">' +
-            '<div class="content-col">' +
+          '<div class="layout ' + (s.showBuilder ? '' : 'layout--summary') + '">' +
+            (s.showBuilder ? '<div class="content-col">' +
 
               '<div class="step-block" id="step1">' +
                 '<div class="step-eyebrow">Step 01</div>' +
@@ -667,7 +671,7 @@
                 '</div>' +
               '</div>' +
 
-            '</div>' +
+            '</div>' : '') +
 
             '<aside class="summary" id="summary">' +
               '<div class="summary-eyebrow">Your Build</div>' +
@@ -675,6 +679,7 @@
               '<div class="summary-lines">' + summaryLinesHTML + '</div>' +
               '<div class="summary-total"><span>Total</span><span>' + fmt(total) + '</span></div>' +
               '<a href="' + continueHref + '" class="btn-primary" style="display:block;box-sizing:border-box;">Book This Package</a>' +
+              (s.showBuilder ? '' : '<button type="button" class="btn-secondary" data-action="toggle-builder">Change these choices</button>') +
               '<p class="summary-note">Prices in Philippine Peso (&#8369;). Tap Book This Package to continue straight to your date and details.</p>' +
             '</aside>' +
 
@@ -711,7 +716,8 @@
       mood: p.mood,
       keepsake: p.keepsake,
       extras: p.extras || { outfit: false, photos: false, rush: false, time: false, framed5r: false, framed8r: false },
-      activePersona: p.id
+      activePersona: p.id,
+      showBuilder: true      // open the steps so they can tweak the look they picked
     });
   }
 
@@ -767,6 +773,9 @@
       }
       case 'apply-persona':
         applyPersona(id);
+        break;
+      case 'toggle-builder':
+        setState({ showBuilder: !state.showBuilder, showPersonas: false });
         break;
       case 'toggle-personas':
         setState({ showPersonas: !state.showPersonas });
