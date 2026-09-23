@@ -28,14 +28,16 @@
   .brandmark { font-family: 'Poppins', sans-serif; font-size: 18px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; color: var(--slate); }
   .brand-loc { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-  .hero { background: var(--slate); padding: 44px 24px 58px; text-align: center; position: relative; overflow: hidden; border-radius: 0 0 28px 28px; }
+  /* warm cream hero so the teal "STUDIO" in the logo stays readable */
+  .hero { background: linear-gradient(168deg, #fdf6f0 0%, #f7efe6 55%, #f1ece3 100%); padding: 40px 24px 58px; text-align: center; position: relative; overflow: hidden; border-radius: 0 0 28px 28px; border-bottom: 1px solid rgba(81,137,125,.12); }
   .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 26px; background: var(--light); clip-path: ellipse(58% 100% at 50% 100%); }
   .hero-logo { display: block; width: 230px; max-width: 62vw; height: auto; margin: 0 auto 18px; }
   .brand-logo { height: 42px; width: auto; display: block; }
-  .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-lt); font-weight: 700; margin-bottom: 16px; }
-  .hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(28px, 5vw, 46px); line-height: 1.18; margin: 0 0 18px; font-weight: 600; color: #fff; }
-  .hero-sub { font-size: clamp(14px, 2vw, 17px); font-weight: 700; letter-spacing: 0.02em; margin: 0 0 16px; color: var(--gold-lt); }
-  .hero-copy { max-width: 520px; margin: 0 auto; color: rgba(255,255,255,0.72); font-size: 14px; line-height: 1.65; }
+  .hero-eyebrow { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 16px; }
+  .hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(28px, 5vw, 46px); line-height: 1.18; margin: 0 0 18px; font-weight: 600; color: var(--slate); }
+  .hero-sub { font-size: clamp(14px, 2vw, 17px); font-weight: 700; letter-spacing: 0.02em; margin: 0 0 16px; color: #b96c3c; }
+  .hero-copy { max-width: 520px; margin: 0 auto; color: var(--muted); font-size: 14px; line-height: 1.65; }
+  .logo-link { display: inline-block; }
 
   .section { padding: 44px 0; border-top: 1px solid var(--border); }
   .section-eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 8px; }
@@ -186,7 +188,7 @@
     <div class="wrap">
       <div class="top-row">
         <div>
-          <img class="brand-logo" src="https://hellotalentff-max.github.io/clicklounge/STUDIO_LOGO_GIF.gif" alt="ClickLounge Studio">
+          <a class="logo-link" href="https://hellotalentff-max.github.io/clicklounge/" title="ClickLounge Studio packages"><img class="brand-logo" src="https://hellotalentff-max.github.io/clicklounge/STUDIO_LOGO_GIF.gif" alt="ClickLounge Studio"></a>
           <div class="brand-loc">Antipolo City &middot; Portrait Studio</div>
         </div>
         <div class="brand-loc">The Look Lab &mdash; build your own session</div>
@@ -197,7 +199,7 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <img class="hero-logo" src="https://hellotalentff-max.github.io/clicklounge/STUDIO_LOGO_GIF.gif" alt="ClickLounge Studio">
+        <a class="logo-link" href="https://hellotalentff-max.github.io/clicklounge/" title="See all ClickLounge Studio packages"><img class="hero-logo" src="https://hellotalentff-max.github.io/clicklounge/STUDIO_LOGO_GIF.gif" alt="ClickLounge Studio"></a>
         <div class="hero-eyebrow">The Look Lab &middot; ClickLounge Studio</div>
         <h1 class="hero-title">You Choose the Mood.<br>We Create the Look.</h1>
         <p class="hero-sub">Build your look &mdash; session, mood, gown and keepsake.</p>
