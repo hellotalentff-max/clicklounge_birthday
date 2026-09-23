@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The ClickLounge Birthday Experience</title>
-<meta name="description" content="Build your own birthday portrait package — mix and match your session, mood, gown and keepsake.">
+<title>The Look Lab · Click Lounge Studio</title>
+<meta name="description" content="The Look Lab by Click Lounge Studio — build your own portrait session: mix and match your session, mood, gown and keepsake.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -186,9 +186,9 @@
       <div class="top-row">
         <div>
           <div class="brandmark">Click Lounge Studio</div>
-          <div class="brand-loc">Antipolo City &middot; Birthday Sessions</div>
+          <div class="brand-loc">Antipolo City &middot; Portrait Studio</div>
         </div>
-        <div class="brand-loc">Build your own portrait menu below</div>
+        <div class="brand-loc">The Look Lab &mdash; build your own session</div>
       </div>
     </div>
   </header>
@@ -197,10 +197,10 @@
     <section class="hero">
       <div class="wrap">
         <div class="hero-logo">🎂</div>
-        <div class="hero-eyebrow">The ClickLounge Birthday Experience</div>
+        <div class="hero-eyebrow">The Look Lab &middot; Click Lounge Studio</div>
         <h1 class="hero-title">You Choose the Mood.<br>We Create the Look.</h1>
-        <p class="hero-sub">Mix and match your session, mood, and keepsake.</p>
-        <p class="hero-copy">No fixed packages here &mdash; build a birthday portrait experience that's entirely yours, one choice at a time.</p>
+        <p class="hero-sub">Build your look &mdash; session, mood, gown and keepsake.</p>
+        <p class="hero-copy">No fixed packages here &mdash; birthdays, headshots, set cards or just because. Build a portrait session that's entirely yours, one choice at a time.</p>
       </div>
     </section>
 
@@ -226,7 +226,7 @@
   var BOOKING_URL = "https://hellotalentff-max.github.io/clicklounge_booking/";
 
   var SESSIONS = [
-    { id: 'essential', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick birthday portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit'] },
+    { id: 'essential', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit'] },
     { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit change', 'Optional: Use of available outfits', '3 edited photos*', 'Basic hair & makeup'] },
     { id: 'signature', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', '2 outfit change', '5 edited photos*', 'Hair and Glam Make up look', '8×24 portrait included'] }
   ];
@@ -237,7 +237,7 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 500, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different birthday looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
+  var DOUBLE = { id: 'double', name: 'The Double Prestige', sub: 'Coat Code × Angelic Muse', price: 1500, bullets: ['Two completely different looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
 
   // 👗 House of Roan gowns — live list, prices and availability from the dress system
   var DRESS_API  = 'https://script.google.com/macros/s/AKfycbzxb4jzWZ8IWijNr-q63t-n4pZUu7QOlsPDFCHHk_CXjIjD8EIu2eGWfoGPQIo4z6eT/exec';
@@ -382,7 +382,7 @@
   }
   function dressMessage(sessionName) {
     var d = state.dress, rate = dressRateOf(pickedDress());
-    return 'Hi Click Lounge Studio! I\'d like to book the House of Roan gown "' + d.name + '" for my ClickLounge Birthday Experience (' +
+    return 'Hi Click Lounge Studio! I\'d like to book the House of Roan gown "' + d.name + '" at the Look Lab (' +
       sessionName + ' session · ' + (rate === 0 ? 'gown included with Prestige' : 'Premium Dress add-on ' + fmt(rate)) + '). ' +
       (state.dressDate ? 'My shoot date: ' + fmtDay(state.dressDate) + '.' : 'I\'ll choose my shoot date on the booking page.') + ' Thank you!';
   }
@@ -422,7 +422,7 @@
           '<div class="persona-name">' + esc(p.name) + '</div>' +
           '<div class="persona-tag">' + esc(p.tag) + '</div>' +
           '<p class="persona-desc">' + esc(p.desc) + '</p>' +
-          '<div class="persona-cta">Try This Era &mdash; from ' + fmt(total) + '</div>' +
+          '<div class="persona-cta">Try This Look &mdash; from ' + fmt(total) + '</div>' +
         '</a>';
     }).join('');
 
@@ -430,8 +430,8 @@
       '<section class="section" id="era">' +
         '<div class="wrap">' +
           '<div class="section-eyebrow">Start Here</div>' +
-          '<h2 class="section-title">What\'s Your Birthday Era?</h2>' +
-          '<p class="section-copy">Build every detail yourself, or start from a ready-made era and tweak it from there.</p>' +
+          '<h2 class="section-title">What\'s Your Look?</h2>' +
+          '<p class="section-copy">Build every detail yourself, or start from a ready-made look and tweak it from there.</p>' +
           '<div class="era-choice-row">' +
             '<a href="#step1" class="era-option">' +
               '<span class="era-option-emoji" aria-hidden="true">&#127912;</span>' +
@@ -441,7 +441,7 @@
             '<button type="button" class="era-option ' + (s.showPersonas ? 'era-option--active' : '') + '" aria-pressed="' + (s.showPersonas ? 'true' : 'false') + '" data-action="toggle-personas">' +
               '<span class="era-option-emoji" aria-hidden="true">&#127873;</span>' +
               '<div class="era-option-name">Pre-Picked</div>' +
-              '<p class="era-option-desc">Choose a ready-made birthday persona in one tap.</p>' +
+              '<p class="era-option-desc">Choose a ready-made look in one tap.</p>' +
             '</button>' +
           '</div>' +
           (s.showPersonas ? '<div class="persona-grid">' + personaCards + '</div>' : '') +
@@ -474,7 +474,7 @@
           '<div class="double-x">&times;</div>' +
           '<div class="double-side"><span class="double-emoji" aria-hidden="true">🪽</span><span>Angel Wings<br><small style="color:#E3B34D;">ethereal, heavenly look</small></span></div>' +
         '</div>' +
-        '<p class="double-tagline">One Birthday. Two Alter Egos.</p>' +
+        '<p class="double-tagline">One Session. Two Alter Egos.</p>' +
         (doubleSelected ? '<span class="tile-check" aria-hidden="true">&#10003; Selected</span>' : '') +
       '</button>';
 
@@ -606,7 +606,7 @@
     // itself (as this used to have) truncates the package and garbles the
     // extracted client name, which is why bookings weren't showing up
     // correctly in Pending Payments. Use a colon here instead.
-    var pkgLabel = 'ClickLounge Birthday Experience: ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
+    var pkgLabel = 'The Look Lab: ' + curSession.name + ' + ' + curMood.name + ' + ' + curKeepsake.name;
     var pkgDesc = extraNames.length ? ('+' + extraNames.map(function (n) { return n.replace(/^\+/, ''); }).join(', +')) : '';
     if (gown) pkgDesc = (pkgDesc ? pkgDesc + ' · ' : '') + 'Gown: ' + gown.name + (gownRate ? ' (+' + fmt(gownRate) + ')' : ' (included)');
     var continueHref = BOOKING_URL +
@@ -668,7 +668,7 @@
 
             '<aside class="summary" id="summary">' +
               '<div class="summary-eyebrow">Your Build</div>' +
-              '<h3 class="summary-title">Your Birthday Look</h3>' +
+              '<h3 class="summary-title">Your Look</h3>' +
               '<div class="summary-lines">' + summaryLinesHTML + '</div>' +
               '<div class="summary-total"><span>Total</span><span>' + fmt(total) + '</span></div>' +
               '<a href="' + continueHref + '" class="btn-primary" style="display:block;box-sizing:border-box;">Book This Package</a>' +
@@ -686,10 +686,10 @@
           '<div class="modal-card">' +
             '<button type="button" class="modal-close" aria-label="Close" data-action="close-confirm">&times;</button>' +
             '<div class="modal-eyebrow">&#10003; Package Ready</div>' +
-            '<h3 class="modal-title">Your ClickLounge Birthday Experience</h3>' +
+            '<h3 class="modal-title">Your Look Lab session</h3>' +
             '<div class="summary-lines">' + summaryLinesHTML + '</div>' +
             '<div class="summary-total"><span>Total</span><span>' + fmt(total) + '</span></div>' +
-            '<p class="modal-note">Continue to booking to pick your date and lock in your birthday session.</p>' +
+            '<p class="modal-note">Continue to booking to pick your date and lock in your session.</p>' +
             '<a href="' + continueHref + '" class="btn-primary">Continue to Booking &rarr;</a>' +
             '<button type="button" class="btn-secondary" data-action="close-confirm">Back to Builder</button>' +
           '</div>' +
