@@ -242,7 +242,7 @@
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 800, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling', '+10 mins shoot', '+2 edited photo'] }
   ];
 
-  var DOUBLE = { id: 'double', name: 'Double the Look', sub: 'Coat Code × Angelic Muse', price: 1800, bullets: ['Two completely different looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
+  var DOUBLE = { id: 'double', name: 'Twofold', sub: 'Coat Code × Angelic Muse', price: 1800, bullets: ['Two completely different looks', 'Fur coat AND angel wings', '+10 mins time', 'Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] };
 
   // 👗 House of Roan gowns — live list, prices and availability from the dress system
   var DRESS_API  = 'https://script.google.com/macros/s/AKfycbzxb4jzWZ8IWijNr-q63t-n4pZUu7QOlsPDFCHHk_CXjIjD8EIu2eGWfoGPQIo4z6eT/exec';
@@ -295,8 +295,8 @@
     return sign + '₱' + Math.abs(n).toLocaleString('en-PH');
   }
 
-  // Prestige Wall is only offered with Double the Look, which includes it.
-  // With Double the Look, Digital and Mini are covered too, so they're not shown.
+  // Prestige Wall is only offered with Twofold, which includes it.
+  // With Twofold, Digital and Mini are covered too, so they're not shown.
   function keepsakeOptions(mood) {
     return KEEPSAKES.filter(function (x) {
       if (mood === 'double') return x.id === 'wall' || x.id === 'acrylic';
@@ -487,7 +487,7 @@
     // ---- Step 4: Keepsake ----
     var keepsakeTiles = keepsakeOptions(s.mood).map(function (x) {
       var price = keepsakePrice(s.session, x.id, s.mood);
-      var label = price === 0 ? (x.id === 'wall' && s.mood === 'double' ? 'Included with Double the Look' : 'Included') : '+' + fmt(price);
+      var label = price === 0 ? (x.id === 'wall' && s.mood === 'double' ? 'Included with Twofold' : 'Included') : '+' + fmt(price);
       return tileHTML(x, s.keepsake === x.id, label, 'pick-keepsake', x.bullets);
     }).join('');
 
@@ -598,7 +598,7 @@
 
     // ---- Hand off to the real booking site's Schedule step ----
     // Session length in minutes (Standard/Prestige/Prestige), +30 when the
-    // client picked the Double The Look mood (two looks = more time).
+    // client picked the Twofold mood (two looks = more time).
     var pkgDur = s.session === 'standard' ? 30 : (s.session === 'Prestige' ? 60 : 90);
     if (s.mood === 'double') pkgDur += 30;
     else if (s.mood === 'coatcode' || s.mood === 'angelic') pkgDur += 10;   // the +10 mins these looks include
@@ -643,7 +643,7 @@
                 '<div class="tile-grid">' + moodTiles + '</div>' +
                 '<div class="mm-callout">' +
                   '<div class="mm-label">Prestige ClickLounge Concept &mdash; Mix &amp; Match</div>' +
-                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double the Look session.</p>' +
+                  '<p class="mm-copy">Can\'t decide? Combine both looks below into one Twofold session.</p>' +
                 '</div>' +
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
               '</div>' +
@@ -755,7 +755,7 @@
         try { navigator.clipboard && navigator.clipboard.writeText(dressMessage(SESSIONS.filter(function (x) { return x.id === state.session; })[0].name)); } catch (err) {}
         return;                                                                     // let the link open Messenger
       case 'pick-mood': {
-        // Double the Look includes the Prestige Wall; other moods can't have it
+        // Twofold includes the Prestige Wall; other moods can't have it
         var kp = state.keepsake;
         if (id === 'double' && (kp === 'digital' || kp === 'mini')) kp = 'wall';
         if (id !== 'double' && kp === 'wall') kp = 'digital';
