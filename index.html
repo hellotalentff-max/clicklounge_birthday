@@ -231,14 +231,14 @@
   var BOOKING_URL = "https://hellotalentff-max.github.io/clicklounge_booking/";
 
   var SESSIONS = [
-    { id: 'essential', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit or rent Premium Dress'] },
-    { id: 'styled', emoji: '✨', name: 'Styled', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit change', 'Optional: Use of available outfits', '3 edited photos*', 'Basic hair & makeup'] },
-    { id: 'signature', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', 'up to 2 outfit change', 'FREE use of 1 Premium Dress', 'Optional: Use of available outfits', '5 edited photos*', 'Glam Make up look', '8×24 portrait included'] }
+    { id: 'Standard', emoji: '📸', name: 'Standard', price: 1200, sub: 'A quick portrait session', bullets: ['10-minute photographer session', '1 background', 'Digital copies', 'Bring your own outfit or rent Premium Dress'] },
+    { id: 'Signature', emoji: '✨', name: 'Signature', price: 3000, sub: 'For clients who want photographer guidance', bullets: ['20-minute photographer session', '2 light styles', '1 outfit change', 'Optional: Use of available outfits', '3 edited photos*', 'Basic hair & makeup'] },
+    { id: 'Prestige', emoji: '👑', name: 'Prestige', price: 5000, sub: 'The full portrait experience', bullets: ['45-minute guided shoot', 'Unlimited shots', '2 light styles', 'up to 2 outfit change', 'FREE use of 1 Premium Dress', 'Optional: Use of available outfits', '5 edited photos*', 'Glam Make up look', '8×24 portrait included'] }
   ];
 
   var MOODS = [
     { id: 'styleshots', emoji: '✨', name: 'Styleshots', sub: 'Modern / Clean / Confident', price: 0, bullets: ['Photographer-guided posing', 'Contemporary lighting', 'Personalized portrait direction', 'Standard lighting'] },
-    { id: 'coatcode', emoji: '🖤', name: 'The Coat Code', sub: 'Luxury / Bold / Fashion', price: 800, bullets: ['Signature fur coat', 'Dark editorial lighting', 'High-fashion posing', 'Foil styling', '+10 mins shoot', '+2 edited photo'] },
+    { id: 'coatcode', emoji: '🖤', name: 'The Coat Code', sub: 'Luxury / Bold / Fashion', price: 800, bullets: ['Prestige fur coat', 'Dark editorial lighting', 'High-fashion posing', 'Foil styling', '+10 mins shoot', '+2 edited photo'] },
     { id: 'angelic', emoji: '🪽', name: 'Angelic Muse', sub: 'Ethereal / Feminine / Dreamy', price: 800, bullets: ['Angel wings', 'Celestial lighting', 'Cloud or Foil Styling', '+10 mins shoot', '+2 edited photo'] }
   ];
 
@@ -252,7 +252,7 @@
   var KEEPSAKES = [
     { id: 'digital', emoji: '💻', name: 'Digital', bullets: ['All edited photos', 'Digital copies'] },
     { id: 'mini', emoji: '🖼️', name: 'Mini Keepsake', bullets: ['4 pcs 2×3in prints', '2 pcs 3×4in prints'] },
-    { id: 'wall', emoji: '🎥', name: 'Signature Wall', bullets: ['Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] },
+    { id: 'wall', emoji: '🎥', name: 'Prestige Wall', bullets: ['Mini Keepsake included', '8×24in printed portrait', '+2 edited photos'] },
     { id: 'acrylic', emoji: '💎', name: 'Prestige Acrylic', bullets: ['Mini Keepsake included', '8×24in portrait in Acrylic Frame with Gold Studs', '+3 edited photos'] }
   ];
 
@@ -266,14 +266,14 @@
   ];
 
   var PERSONAS = [
-    { id: 'itgirl', emoji: '🖤', name: 'Luxe Mode', tag: 'The It Girl', stripe: '#2E5C55', desc: 'Dark editorial lighting. Fur coat. Black styling.', session: 'styled', mood: 'coatcode', keepsake: 'digital' },
-    { id: 'muse', emoji: '🪽', name: 'The Angelic Muse', tag: 'The Muse', stripe: '#E3B34D', desc: 'Runway angel wings. Soft celestial lighting. Ethereal styling.', session: 'styled', mood: 'angelic', keepsake: 'mini' },
-    { id: 'mainchar', emoji: '✨', name: 'Styleshots', tag: 'The Main Character', stripe: '#C1603D', desc: 'Photographer-guided posing. Confident editorial portraits.', session: 'styled', mood: 'styleshots', keepsake: 'digital', extras: { outfit: true, photos: false, rush: false } },
-    { id: 'icon', emoji: '👑', name: 'Prestige', tag: 'The Icon', stripe: '#8C4A2F', desc: 'Unlimited shots. Multiple looks. Full glam. 8×24 portrait.', session: 'signature', mood: 'double', keepsake: 'wall' }
+    { id: 'itgirl', emoji: '🖤', name: 'Luxe Mode', tag: 'The It Girl', stripe: '#2E5C55', desc: 'Dark editorial lighting. Fur coat. Black styling.', session: 'Signature', mood: 'coatcode', keepsake: 'digital' },
+    { id: 'muse', emoji: '🪽', name: 'The Angelic Muse', tag: 'The Muse', stripe: '#E3B34D', desc: 'Runway angel wings. Soft celestial lighting. Ethereal styling.', session: 'Signature', mood: 'angelic', keepsake: 'mini' },
+    { id: 'mainchar', emoji: '✨', name: 'Styleshots', tag: 'The Main Character', stripe: '#C1603D', desc: 'Photographer-guided posing. Confident editorial portraits.', session: 'Signature', mood: 'styleshots', keepsake: 'digital', extras: { outfit: true, photos: false, rush: false } },
+    { id: 'icon', emoji: '👑', name: 'Prestige', tag: 'The Icon', stripe: '#8C4A2F', desc: 'Unlimited shots. Multiple looks. Full glam. 8×24 portrait.', session: 'Prestige', mood: 'double', keepsake: 'wall' }
   ];
 
   var state = {
-    session: 'styled',
+    session: 'Signature',
     mood: 'styleshots',
     keepsake: 'digital',
     extras: { outfit: false, photos: false, rush: false, time: false, framed5r: false, framed8r: false },
@@ -295,7 +295,7 @@
     return sign + '₱' + Math.abs(n).toLocaleString('en-PH');
   }
 
-  // Signature Wall is only offered with Double the Look, which includes it.
+  // Prestige Wall is only offered with Double the Look, which includes it.
   // With Double the Look, Digital and Mini are covered too, so they're not shown.
   function keepsakeOptions(mood) {
     return KEEPSAKES.filter(function (x) {
@@ -306,13 +306,13 @@
   function keepsakePrice(session, keepsake, mood) {
     if (keepsake === 'digital') return 0;
     if (keepsake === 'mini') return 100;
-    if (keepsake === 'wall') return mood === 'double' || session === 'signature' ? 0 : 1000;
-    if (keepsake === 'acrylic') return session === 'signature' ? 1000 : 1500;
+    if (keepsake === 'wall') return mood === 'double' || session === 'Prestige' ? 0 : 1000;
+    if (keepsake === 'acrylic') return session === 'Prestige' ? 1000 : 1500;
     return 0;
   }
 
   function calcTotalFor(session, mood, keepsake, extras) {
-    var SESSION_PRICE = { essential: 1200, styled: 3000, signature: 5000 };
+    var SESSION_PRICE = { standard: 1200, Signature: 3000, Prestige: 5000 };
     var MOOD_PRICE = { styleshots: 0, coatcode: 800, angelic: 800, double: 1800 };
     var EXTRA_PRICE = { outfit: 300, photos: 500, rush: 500, time: 700, framed5r: 800, framed8r: 1000 };
     var total = SESSION_PRICE[session] + MOOD_PRICE[mood] + keepsakePrice(session, keepsake, mood);
@@ -321,7 +321,7 @@
   }
 
   // ---- 👗 gown helpers ----
-  function dressCo() { return state.session === 'signature' ? 'CLS Prestige' : 'CLS Photographer'; }
+  function dressCo() { return state.session === 'Prestige' ? 'CLS Prestige' : 'CLS Photographer'; }
   function dressSlug(n) { return String(n || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function dressPhoto(d) {
     var m = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/.exec(d.photo || '');
@@ -336,14 +336,14 @@
   function gownImg(d) { return '<img src="' + esc(dressPhoto(d)) + '" alt="' + esc(d.name) + '" loading="lazy" onerror="gownImgFail(this)">'; }
   function dressRateOf(d) {
     if (!d) return 0;
-    if (state.session === 'signature') return 0;                                    // Prestige: gown included
+    if (state.session === 'Prestige') return 0;                                    // Prestige: gown included
     var a = state.dressAvail && state.dressAvail.filter(function (x) { return x.name === d.name; })[0];
     if (a && a.rate != null) return a.rate;
     return d.photographerRate != null ? d.photographerRate : 0;                      // Package add-on price
   }
   // The gown step shows everywhere except Prestige + Styleshots.
-  // Prestige includes the gown; Standard and Styled pay the Package add-on rate.
-  function gownOK(session, mood) { return !(session === 'signature' && mood === 'styleshots'); }
+  // Prestige includes the gown; Standard and Signature pay the Package add-on rate.
+  function gownOK(session, mood) { return !(session === 'Prestige' && mood === 'styleshots'); }
   function pickedDress() {
     if (!state.dress || !state.dressList) return state.dress;
     return state.dressList.filter(function (x) { return x.name === state.dress.name; })[0] || state.dress;
@@ -492,7 +492,7 @@
     }).join('');
 
     // ---- Step 3: Gown (House of Roan) ----
-    var isPrestige = s.session === 'signature';
+    var isPrestige = s.session === 'Prestige';
     var gownAllowed = gownOK(s.session, s.mood);
     var gownNow = gownAllowed ? pickedDress() : null;
     var msgHref = gownNow ? MESSENGER + '?text=' + encodeURIComponent(dressMessage(SESSIONS.filter(function (x) { return x.id === s.session; })[0].name)) : '';
@@ -597,9 +597,9 @@
     }).join('');
 
     // ---- Hand off to the real booking site's Schedule step ----
-    // Session length in minutes (Essential/Styled/Signature), +30 when the
-    // client picked the Double Signature mood (two looks = more time).
-    var pkgDur = s.session === 'essential' ? 30 : (s.session === 'styled' ? 60 : 90);
+    // Session length in minutes (Standard/Prestige/Prestige), +30 when the
+    // client picked the Double The Look mood (two looks = more time).
+    var pkgDur = s.session === 'standard' ? 30 : (s.session === 'Prestige' ? 60 : 90);
     if (s.mood === 'double') pkgDur += 30;
     else if (s.mood === 'coatcode' || s.mood === 'angelic') pkgDur += 10;   // the +10 mins these looks include
     // Send the full descriptive package name — this is what the POS/booking
@@ -631,7 +631,7 @@
               '<div class="step-block" id="step1">' +
                 '<div class="step-eyebrow">Step 01</div>' +
                 '<h3 class="step-title">Pick Your Session</h3>' +
-                '<p class="step-copy">Essential, Styled, or Signature &mdash; your starting point and shoot time.</p>' +
+                '<p class="step-copy">Standard, Signature, or Prestige &mdash; your starting point and shoot time.</p>' +
                 '<div class="tile-grid">' + sessionTiles + '</div>' +
                 '<p class="step-note">*Edited photos have a <strong>5&ndash;7 business day</strong> lead time.</p>' +
               '</div>' +
@@ -639,10 +639,10 @@
               '<div class="step-block">' +
                 '<div class="step-eyebrow">Step 02</div>' +
                 '<h3 class="step-title">Pick Your Mood</h3>' +
-                '<p class="step-copy">Your signature concept &mdash; the lighting, styling, and story of your shoot.</p>' +
+                '<p class="step-copy">Your Prestige concept &mdash; the lighting, styling, and story of your shoot.</p>' +
                 '<div class="tile-grid">' + moodTiles + '</div>' +
                 '<div class="mm-callout">' +
-                  '<div class="mm-label">Signature ClickLounge Concept &mdash; Mix &amp; Match</div>' +
+                  '<div class="mm-label">Prestige ClickLounge Concept &mdash; Mix &amp; Match</div>' +
                   '<p class="mm-copy">Can\'t decide? Combine both looks below into one Double the Look session.</p>' +
                 '</div>' +
                 '<div class="tile-grid">' + doubleTileHTML + '</div>' +
@@ -729,9 +729,9 @@
 
     switch (action) {
       case 'pick-session': {
-        var wasPrestige = state.session === 'signature';
+        var wasPrestige = state.session === 'Prestige';
         setState({ session: id, activePersona: null, dress: gownOK(id, state.mood) ? state.dress : null });
-        if (wasPrestige !== (id === 'signature') && state.dressDate) loadAvailability();   // price & rules differ per package
+        if (wasPrestige !== (id === 'Prestige') && state.dressDate) loadAvailability();   // price & rules differ per package
         break;
       }
       case 'open-dresses':
@@ -755,7 +755,7 @@
         try { navigator.clipboard && navigator.clipboard.writeText(dressMessage(SESSIONS.filter(function (x) { return x.id === state.session; })[0].name)); } catch (err) {}
         return;                                                                     // let the link open Messenger
       case 'pick-mood': {
-        // Double the Look includes the Signature Wall; other moods can't have it
+        // Double the Look includes the Prestige Wall; other moods can't have it
         var kp = state.keepsake;
         if (id === 'double' && (kp === 'digital' || kp === 'mini')) kp = 'wall';
         if (id !== 'double' && kp === 'wall') kp = 'digital';
